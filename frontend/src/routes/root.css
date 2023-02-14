@@ -1,0 +1,20 @@
+#sidebar {
+    background-color: aqua;
+    border-radius: 20px;
+    padding: 3px 35px;
+    height: 100%;
+    width: 30%;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+}
+
+#main-page {
+    margin-left: 40%;
+}
+
+.link {
+    font-size: 50px;
+}

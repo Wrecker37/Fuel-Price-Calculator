@@ -1,4 +1,5 @@
 import { Outlet, Link } from "react-router-dom";
+import './root.css';
 
 export default function Root() {
     return (
@@ -7,16 +8,16 @@ export default function Root() {
                 <h1>Sidebar</h1>
                 <nav>
                     <ul>
-                        <li>
+                        <li class="link">
                             <Link to={`profile`}>Profile</Link>
                         </li>
-                        <li>
+                        <li class="link">
                             <Link to={`calculator`}>Calculator</Link>
                         </li>
                     </ul>
                 </nav>
             </div>
-            <div id="detail">
+            <div id="main-page">
                 <Outlet />
             </div>
         </>
