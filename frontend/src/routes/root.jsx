@@ -9,6 +9,9 @@ export default function Root() {
                 <nav>
                     <ul>
                         <li class="link">
+                            <Link to={`login`}>Login</Link>
+                        </li>
+                        <li class="link">
                             <Link to={`profile`}>Profile</Link>
                         </li>
                         <li class="link">

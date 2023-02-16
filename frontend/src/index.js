@@ -7,7 +7,8 @@ import {
 import Root from "./routes/root";
 import Calculator from './routes/calculator';
 import Profile from './routes/profile';
-
+import Login from './routes/login';
+import Register from './routes/register';
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,14 @@ const router = createBrowserRouter([
     {
       path: "/profile",
       element: <Profile />,
+    },
+    {
+      path: "/login",
+      element: <Login />,
+    },
+    {
+      path: "/register",
+      element: <Register />,
     },
     ]
   },
