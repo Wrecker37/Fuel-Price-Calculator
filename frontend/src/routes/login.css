@@ -1,0 +1,54 @@
+:root {
+    --formWidth:200px;
+    --buttonWidth:210px; /* +10 of formWidth */
+}
+
+Form {
+    padding-bottom: 20px;
+}
+
+Form > div {
+    padding:5px 0px;
+}
+
+Form > div > label {
+    display:block;
+    padding-bottom:3px;
+}
+
+.textbox {
+    padding:3px;
+    width:var(--formWidth);
+}
+
+.submit {
+    padding-top:15px;
+}
+
+.submit button {
+    width:var(--buttonWidth);
+    padding:5px;
+}
+
+.register {
+    padding-top:10px;
+    border-top: 0.5px #333 solid;
+    width: var(--buttonWidth);
+    text-align: center;
+}
+
+.register a {
+    color:black;
+    text-decoration:none;
+    transition: ease-in 0.3s;
+}
+
+.register a:hover {
+    color:gray;
+}
+
+.error {
+    color:red;
+    font-size:smaller;
+    padding-top:2px;
+}
