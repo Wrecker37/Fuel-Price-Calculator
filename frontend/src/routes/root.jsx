@@ -8,6 +8,9 @@ export default function Root() {
                 <h1>Sidebar</h1>
                 <nav>
                     <ul>
+                    <li class="link">
+                            <Link to={`login`}>LogIn</Link>
+                        </li>
                         <li class="link">
                             <Link to={`profile`}>Profile</Link>
                         </li>

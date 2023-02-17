@@ -5,6 +5,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Root from "./routes/root";
+import LogIn from './routes/login';
 import Calculator from './routes/calculator';
 import Profile from './routes/profile';
 
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
     path: "/",
     element: <Root />,
     children: [
+    {
+      path: "/login",
+      element: <LogIn />,
+    },
     {
       path: "/calculator",
       element: <Calculator />,
