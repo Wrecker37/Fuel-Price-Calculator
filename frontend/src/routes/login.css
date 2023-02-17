@@ -30,6 +30,16 @@ Form > div > label {
     padding:5px;
 }
 
+.dropdown {
+    width:var(--buttonWidth);
+    padding:5px;
+}
+
+.required:after {
+    content:"*";
+    color:red;
+}
+
 .register {
     padding-top:10px;
     border-top: 0.5px #333 solid;
