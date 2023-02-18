@@ -57,7 +57,7 @@ export default class Login extends React.Component {
                                 </div>
                                 <div>
                                     <label for="address2">Secondary Address</label>
-                                    <Field type="text" name="address2" class="textbox" placeholder="address"/>
+                                    <Field type="text" name="address2" class="textbox" placeholder="optional"/>
                                     <div class="error">{errors.address2 && touched.address2 ? ( <div>{errors.address2}</div> ) : null}</div>
                                 </div>
                                 <div>
