@@ -9,6 +9,7 @@ import Calculator from './routes/calculator';
 import Profile from './routes/profile';
 import Login from './routes/login';
 import Register from './routes/register';
+import QuoteHistory from './routes/quotehistory';
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
     {
       path: "/calculator",
       element: <Calculator />,
+    },
+    {
+      path: "/quotehistory",
+      element: <QuoteHistory />,
     },
     {
       path: "/profile",

@@ -2,7 +2,6 @@ import React from "react";
 import { Formik, Form, Field } from 'formik';
 import './root.css';
 import { Link } from "react-router-dom";
-import './login.css';
 import * as Yup from 'yup';
 import { useState } from "react";
 import {useFormikContext} from 'formik';
@@ -55,7 +54,7 @@ const total = price * gallons;
 
 
 
-export default class Calculator extends React.Component {
+export default class QuoteHistory extends React.Component {
 
     constructor(props) {
         super(props);
@@ -77,49 +76,31 @@ export default class Calculator extends React.Component {
 
                         {({ errors, touched, isValidating, isSubmitting }) => (
                             <div>
-                                <h1>Calculator</h1>
-                                <Form>
+                                <h1>Quote History</h1>
+                                <h2>Example 1</h2>
+                                <Form>                                 
                                     <div>
-                                        <label for="client-in-state">Client In-State</label>                                    
-                                        <Field as="select" name="client-in-state">
-                                            <option value="">Select an option</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                        </Field>
-                                        <div class="error">{errors.Client_In_State && touched.Client_In_State ? (<div>{errors.Client_In_State}</div>) : null}</div>
+                                        <label for="in-state">In-State: No</label>
+                                        <label for="past-client">Past Client: Yes</label>
+                                        <label for ="date">Delivery Date: 1/13/2023</label>
+                                        <label for="gallons">Gallons Requested: {gallons+10}</label>
+                                        <label for="nonEditable" title={myString}>Delivery Address: {"107 Oklahoma 77S, Marietta, OK 73448"}</label>
+                                        {/* <label for="nonEditable">Non-Editable Address from Profile</label> */}
+                                        <label for="price">Price: ${price+.25}  / gallon </label> 
+                                        <label for="price">Total: ${total+25} </label>                                    
                                     </div>
-
+                                </Form>
+                                <h2>Example 2</h2>
+                                <Form>                                 
                                     <div>
-                                        <label for="client-history">Past Client</label>                                    
-                                        <Field as="select" name="client-history">
-                                            <option value="">Select an option</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                        </Field>
-                                        <div class="error">{errors.client_History && touched.client_History ? (<div>{errors.client_History}</div>) : null}</div>
-                                    </div>
-
-                                    <div>
-                                        <label for="myDate">Delivery Date</label>
-                                        <Field name="myDate" component={MyDatePicker} />
-                                        {/* <Field name="date" as={MyCalendar} /> */}
-                                        
-                                    </div>
-                                    
-                                    <div>
-                                        <label for="gallons">Gallons Requested</label>
-                                        <Field type="number" name="gallons" class="form-control" />
-                                        <div class="error">{errors.gallons && touched.gallons ? (<div>{errors.gallons}</div>) : null}</div>
-                                    </div>
-                                    
-                                    <div>
+                                        <label for="in-state">In-State: Yes</label>
+                                        <label for="past-client">Past Client: Yes</label>
+                                        <label for ="date">Delivery Date: 2/20/2023</label>
+                                        <label for="gallons">Gallons Requested: {gallons}</label>
                                         <label for="nonEditable" title={myString}>Delivery Address: {myString}</label>
+                                        {/* <label for="nonEditable">Non-Editable Address from Profile</label> */}
                                         <label for="price">Price: ${price}  / gallon </label> 
                                         <label for="price">Total: ${total} </label>                                    
-                                    </div>
-
-                                    <div class="submit">
-                                        <button type="submit">Submit</button>
                                     </div>
                                 </Form>
                                

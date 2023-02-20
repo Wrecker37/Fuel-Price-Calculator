@@ -17,6 +17,9 @@ export default function Root() {
                         <li class="link">
                             <Link to={`calculator`}>Calculator</Link>
                         </li>
+                        <li class="link">
+                            <Link to={`quotehistory`}>Quote History</Link>
+                        </li>
                     </ul>
                 </nav>
             </div>
