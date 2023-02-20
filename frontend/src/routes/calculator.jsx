@@ -1,7 +1,6 @@
 import React from "react";
 import { Formik, Form, Field } from 'formik';
 import './root.css';
-import { Link } from "react-router-dom";
 import './login.css';
 import * as Yup from 'yup';
 import { useState } from "react";
@@ -11,29 +10,12 @@ import Calendar from 'react-modern-calendar-datepicker'
 import 'react-modern-calendar-datepicker/lib/DatePicker.css';
 
 const valid = Yup.object().shape({
-    user: Yup.string()
+    gallons: Yup.string()
         .required('Required'),
-    password: Yup.string()
-        .required('Required'),
+    client_in_state: Yup.string().oneOf(['yes', 'no'], 'Required'),
+    client_history: Yup.string().oneOf(['yes', 'no'], 'Required'),
 });
 
-
-function MyCalendar() {
-    const [selectedDate, setSelectedDate] = useState(null);
-  
-    const handleDateChange = (date) => {
-      setSelectedDate(date);
-    };
-  
-    return (
-      <Calendar
-        value={selectedDate}
-        onChange={handleDateChange}
-        calendarClassName="my-calendar"
-        shouldHighlightWeekends
-      />
-    );
-};
 function MyDatePicker({ name, ...rest }) {
     const { setFieldValue } = useFormikContext();
 
@@ -48,7 +30,7 @@ function MyDatePicker({ name, ...rest }) {
     );
   }
 
-const myString = "4401 Cougar Village Dr, Houston, TX 77204";
+const HardCodeAddress = "4401 Cougar Village Dr, Houston, TX 77204";
 const price = 2.50;
 const gallons = 100;
 const total = price * gallons;
@@ -68,7 +50,7 @@ export default class Calculator extends React.Component {
             return (
 
                 <>
-                    <Formik initialValues={{ gallons: '', address: '', selectedDay: new Date() }} validationSchema={valid} onSubmit={(values, { setSubmitting }) => {
+                    <Formik initialValues={{ gallons: '', address: HardCodeAddress, selectedDay: new Date(), client_in_state: '', client_history: '', }} validationSchema={valid} onSubmit={(values, { setSubmitting }) => {
                         setTimeout(() => {
                             alert(JSON.stringify(values, null, 2));
                             setSubmitting(false);
@@ -80,40 +62,39 @@ export default class Calculator extends React.Component {
                                 <h1>Calculator</h1>
                                 <Form>
                                     <div>
-                                        <label for="client-in-state">Client In-State</label>                                    
-                                        <Field as="select" name="client-in-state">
+                                        <label for="client_in_state" class ="required">Client In-State</label>                                    
+                                        <Field as="select" name="client_in_state">
                                             <option value="">Select an option</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                         </Field>
-                                        <div class="error">{errors.Client_In_State && touched.Client_In_State ? (<div>{errors.Client_In_State}</div>) : null}</div>
+                                        <div class="error">{errors.client_in_state && touched.client_in_state ? (<div>{errors.client_in_state}</div>) : null}</div>
                                     </div>
 
                                     <div>
-                                        <label for="client-history">Past Client</label>                                    
-                                        <Field as="select" name="client-history">
+                                        <label for="client_history" class ="required">Past Client</label>                                    
+                                        <Field as="select" name="client_history">
                                             <option value="">Select an option</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                         </Field>
-                                        <div class="error">{errors.client_History && touched.client_History ? (<div>{errors.client_History}</div>) : null}</div>
+                                        <div class="error">{errors.client_history && touched.client_history ? (<div>{errors.client_history}</div>) : null}</div>
                                     </div>
 
                                     <div>
-                                        <label for="myDate">Delivery Date</label>
+                                        <label for="myDate" class ="required">Delivery Date</label>
                                         <Field name="myDate" component={MyDatePicker} />
-                                        {/* <Field name="date" as={MyCalendar} /> */}
                                         
                                     </div>
                                     
                                     <div>
-                                        <label for="gallons">Gallons Requested</label>
+                                        <label for="gallons" class ="required">Gallons Requested</label>
                                         <Field type="number" name="gallons" class="form-control" />
                                         <div class="error">{errors.gallons && touched.gallons ? (<div>{errors.gallons}</div>) : null}</div>
                                     </div>
                                     
                                     <div>
-                                        <label for="nonEditable" title={myString}>Delivery Address: {myString}</label>
+                                        <label for="nonEditable" title={HardCodeAddress}>Delivery Address: {HardCodeAddress}</label>
                                         <label for="price">Price: ${price}  / gallon </label> 
                                         <label for="price">Total: ${total} </label>                                    
                                     </div>

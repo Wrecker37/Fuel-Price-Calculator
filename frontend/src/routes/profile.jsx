@@ -125,7 +125,7 @@ export default class Login extends React.Component {
                                 </div>
                                 <div>
                                     <label for="zipcode" class="required">Zipcode</label>
-                                    <Field type="text" name="zipcode" class="textbox" placeholder="address"/>
+                                    <Field type="text" name="zipcode" class="textbox" placeholder="zipcode"/>
                                     <div class="error">{errors.zipcode && touched.zipcode ? ( <div>{errors.zipcode}</div> ) : null}</div>
                                 </div>
                                 <div class="submit">
