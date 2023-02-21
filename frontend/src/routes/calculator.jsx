@@ -12,8 +12,11 @@ import 'react-modern-calendar-datepicker/lib/DatePicker.css';
 const valid = Yup.object().shape({
     gallons: Yup.string()
         .required('Required'),
-    client_in_state: Yup.string().oneOf(['yes', 'no'], 'Required'),
-    client_history: Yup.string().oneOf(['yes', 'no'], 'Required'),
+    client_in_state: Yup.string().oneOf(['yes', 'no'], 'Required')
+        .required('Required'),
+    client_history: Yup.string().oneOf(['yes', 'no'], 'Required')
+        .required('Required'),
+
 });
 
 function MyDatePicker({ name, ...rest }) {
