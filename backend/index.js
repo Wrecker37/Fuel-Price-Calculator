@@ -5,7 +5,7 @@ const userRouter = require('./routes/user');
 const profileRouter = require('./routes/profile');
 
 const app = express();
-const port = 3000;
+const port = 8080;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -18,7 +18,10 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-
+// app.post("post_login", (req, res) => {
+//   let {username, password} = req.body
+//   console.log(username, password)
+// })
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
