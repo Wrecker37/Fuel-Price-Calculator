@@ -3,6 +3,7 @@ const cors = require('cors');
 
 const userRouter = require('./routes/user');
 const profileRouter = require('./routes/profile');
+const quoteRouter = require('./routes/quote');
 
 const app = express();
 const port = 8080;
@@ -13,6 +14,7 @@ app.use(cors());
 
 app.use('/user', userRouter);
 app.use('/profile', profileRouter);
+app.use('/quote', quoteRouter);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
