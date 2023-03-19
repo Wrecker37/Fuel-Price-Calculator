@@ -4,6 +4,7 @@ import './root.css';
 import { Link } from "react-router-dom";
 import './login.css';
 import * as Yup from 'yup';
+import AuthenticationService from '../services/authentication-service.js';
 
 const valid = Yup.object().shape({
     user: Yup.string()
@@ -15,6 +16,17 @@ const valid = Yup.object().shape({
         .required('Required'),
   });
 
+
+const handleSubmit = async (data) => {
+    const isRegistered = AuthenticationService.loginUser(data.user, data.password)
+    if (isRegistered){
+        console.log("Registered")
+    } else {
+        console.log("Not Registered")
+    }
+
+  };
+
 export default class Login extends React.Component {
     constructor(props) {
         super(props);
@@ -24,12 +36,7 @@ export default class Login extends React.Component {
     render() {
         return (
             <>
-                <Formik initialValues={{user:'', password: '', confirm: ''}} validationSchema={valid} onSubmit={(values, {setSubmitting}) => {
-                    setTimeout(() => {
-                        alert(JSON.stringify(values, null, 2));
-                        setSubmitting(false);
-                    }, 400);
-                }}>
+                <Formik initialValues={{user:'', password: '', confirm: ''}} validationSchema={valid} onSubmit = {handleSubmit}>
 
                     {({errors, touched, isSubmitting}) => (
                         <div>
