@@ -1,7 +1,6 @@
-import {render , screen} from "@testing-library/react";
-import quote from "./quote";
-
+const add = (a, b) => a + b;
 
 test("temp", () => {
-    1 == 1;
+    const sum = add(3, 4);
+    expect(sum).toBe(7);
 })

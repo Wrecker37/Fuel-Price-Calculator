@@ -4,7 +4,7 @@
   "description": "Application to predict fuel rates based on a number of factors including:",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "author": "",
   "license": "ISC",
