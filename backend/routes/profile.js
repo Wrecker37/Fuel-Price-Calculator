@@ -6,7 +6,7 @@ const ProfileService = require('../services/profile-service');
 const router = express.Router();
 
 /* GET /profile */
-router.get('/', 
+router.get('/getProfile', 
     query('userId').exists().notEmpty(),
     async (req, res) => {
         const errors = validationResult(req);
@@ -27,9 +27,9 @@ router.get('/',
 );
 
 /* POST /profile */
-router.post('/',
+router.post('/postProfile',
     body('userId').exists().notEmpty(),
-    body('fullName').exists().notEmpty(),
+    body('name').exists().notEmpty(),
     body('address').exists().notEmpty(),
     body('city').exists().notEmpty(),
     body('state').exists().notEmpty(),
