@@ -26,8 +26,19 @@ const valid = Yup.object().shape({
         .required('Required'),
   });
 
+  const userId = 1;
+
   const handleSubmit = async (data) => {
-    const profileSent = ProfileService.postProfile(data.userId, data.profileDetails)
+
+    const profileSent = ProfileService.setProfile(data.userId, {
+        name: data.name,
+        address1: data.address1,
+        address2: data.address2,
+        city: data.city,
+        state: data.state,
+        zipcode: data.zipcode
+    });
+
     if (profileSent){
         console.log("Profile sent")
     } else {
@@ -48,7 +59,7 @@ export default class Login extends React.Component {
         return (
             <>
                 
-                <Formik initialValues={{userId: 1, profileDetails: { name:'', address1: '', address2: '', city: '', state: '', zipcode: ''}} } validationSchema={valid} onSubmit = {handleSubmit}>
+                <Formik initialValues={{userId, name:'', address1: '', address2: '', city: '', state: '', zipcode: '' }} validationSchema={valid} onSubmit = {handleSubmit}>
                     
                     {({errors, touched, isValidating, isSubmitting}) => (
                         <div>

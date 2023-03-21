@@ -2,7 +2,7 @@ import axios from "axios";
 
 export default class ProfileService {
     static async getProfile() {
-        const quotes = await axios.get('http://localhost:8080/profile', {
+        const quotes = await axios.get('http://localhost:8080/profile/getProfile', {
             params: {
                 userId: "DummyId",
             },
@@ -10,21 +10,18 @@ export default class ProfileService {
         return quotes.data.quotes;
     }
 
-    static async postProfile() {
-        const profile = await axios.post('http://localhost:8080/profile/postProfile', {
-            params: {
-                userId: "DummyId",
-                profileDetails: {
-                    name: "Dummy Name",
-                    address1: "Dummy Address1",
-                    address2: "Dummy Address2",
-                    city: "Dummy City",
-                    state: "Dummy State",
-                    zipcode: "Dummy Zipcode",
-
-                }
-            },
+    static async setProfile(userId, profileDetails) {
+        console.log('Request data:', {
+            userId,
+            ...profileDetails,
         });
-        return profile.data.profileSent;
+        const response = await axios.post('http://localhost:8080/profile/postProfile', {
+            
+                userId,
+                ...profileDetails, 
+              
+            
+        });
+        return response.data.profile;
     }
 }
