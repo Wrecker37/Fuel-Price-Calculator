@@ -30,10 +30,10 @@ const valid = Yup.object().shape({
 
   const handleSubmit = async (data) => {
 
-    const profileSent = ProfileService.setProfile(data.userId, {
+    const profileSent = await ProfileService.setProfile(userId, {
         name: data.name,
         address1: data.address1,
-        address2: data.address2,
+        //address2: data.address2,
         city: data.city,
         state: data.state,
         zipcode: data.zipcode
@@ -59,7 +59,7 @@ export default class Login extends React.Component {
         return (
             <>
                 
-                <Formik initialValues={{userId, name:'', address1: '', address2: '', city: '', state: '', zipcode: '' }} validationSchema={valid} onSubmit = {handleSubmit}>
+                <Formik initialValues={{name:'', address1: '', city: '', state: '', zipcode: '' }} validationSchema={valid} onSubmit = {handleSubmit}>
                     
                     {({errors, touched, isValidating, isSubmitting}) => (
                         <div>

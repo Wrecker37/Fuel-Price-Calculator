@@ -35,6 +35,7 @@ router.post('/profile/postProfile',
     body('state').exists().notEmpty(),
     body('zipcode').exists().notEmpty(),
     async (req, res) => {
+        console.log('POST /profile/postProfile is called');
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
