@@ -5,11 +5,7 @@ const UserService = require('../services/user-service');
 
 const router = express.Router();
 
-/* POST /user/register */
-router.post('/register', 
-    body('username').exists().notEmpty(),    
-    body('password').exists().notEmpty(),    
-    async (req, res) => {
+async function postfunc(req, res) {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
@@ -25,26 +21,17 @@ router.post('/register',
             return res.status(500).json({ message: "Cannot load resource"});
         }
     }
+/* POST /user/register */
+router.post('/register', 
+    body('username').exists().notEmpty(),    
+    body('password').exists().notEmpty(),    
+    postfunc
 );
 
 router.post('/login',
     body('username').exists().notEmpty(),    
     body('password').exists().notEmpty(),
-    async (req, res) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
-        }
-
-        const { username, password } = req.body;
-
-        const isLoggedIn = await UserService.loginUser(username, password);
-        if (!isLoggedIn) {
-            return res.status(200).json({ isLoggedIn: false });
-        } 
-
-        return res.status(200).json({ isLoggedIn: true });
-    }
+    postfunc
 )
 
 module.exports = router;

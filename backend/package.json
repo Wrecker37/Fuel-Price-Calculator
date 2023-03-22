@@ -17,5 +17,14 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
+  },
+  "jest": {
+      "transformIgnorePatterns": [
+        "node_modules/(?!@ngrx|(?!deck.gl)|ng-dynamic)"
+      ],
+      "setupFiles": [
+        "<rootDir>/setupTests.js"
+      ]
+
   }
 }
