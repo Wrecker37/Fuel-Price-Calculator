@@ -6,7 +6,7 @@ const ProfileService = require('../services/profile-service');
 const router = express.Router();
 
 /* GET /profile */
-router.get('/profile/getProfile', 
+router.get('/getProfile', 
     query('userId').exists().notEmpty(),
     async (req, res) => {
         const errors = validationResult(req);
@@ -27,7 +27,7 @@ router.get('/profile/getProfile',
 );
 
 /* POST /profile */
-router.post('/profile/postProfile',
+router.post('/postProfile',
     body('userId').exists().notEmpty(),
     body('name').exists().notEmpty(),
     body('address1').exists().notEmpty(),
@@ -36,16 +36,28 @@ router.post('/profile/postProfile',
     body('zipcode').exists().notEmpty(),
     async (req, res) => {
         console.log('POST /profile/postProfile is called');
+        // console.log('Request body:', req.body);
+        
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const { userId, ...profileDetails } = req.body;
-
+        const {userId, ...profileDetails} = req.body;
+        /*
+        // const { userId, name, address1, address2, city, state, zipcode } = req.body;
+        */
         try {
-            const profile = await ProfileService.setProfile(userId, profileDetails);
-            return res.status(200).json({ profile });
+            // const profileDetails = { name, address1, address2, city, state, zipcode };
+            onsole.log('profile entering await')
+            const profileSent = await ProfileService.setProfile(userId, profileDetails);
+            // return res.status(200).json({ profile: true });
+            console.log('profile got through await')
+            if (!profileSent) {
+                return res.status(200).json({ profileSent: false });
+            } 
+    
+            return res.status(200).json({ profileSent: true });
         } catch (err) {
             console.log(`ProfileService.setProfile() failed - Error${err}`);
             return res.status(500).json({ message: "Cannot load resource"});

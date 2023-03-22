@@ -11,17 +11,13 @@ export default class ProfileService {
     }
 
     static async setProfile(userId, profileDetails) {
-        console.log('Request data:', {
-            userId,
-            ...profileDetails,
-        });
-        const response = await axios.post('http://localhost:8080/profile/postProfile', {
-            
+        console.log('Data being sent:', userId, profileDetails);
+        const response = await axios.post('http://localhost:8080/profile/postProfile', 
+            {
                 userId,
-                ...profileDetails, 
-              
-            
-        });
-        return response.data.profile;
+                ...profileDetails,
+            }
+    );
+        return response.data.profileSent;
     }
 }

@@ -1,0 +1,23 @@
+[33ma6ccee8[m[33m ([m[1;36mHEAD -> [m[1;32mjairo-backend[m[33m, [m[1;31morigin/jairo-backend[m[33m)[m fixed await in handleSubmit func
+[33m65eff81[m Connecting profile to backend att. 2
+[33m2303f04[m Working on profile page connection to backend
+[33m43322ad[m[33m ([m[1;31morigin/backend[m[33m, [m[1;32mbackend[m[33m)[m register connected to backend
+[33m407d165[m Connect Quote History page to BE
+[33m621daa3[m Implement /quote
+[33m9ff6817[m login connected to back end
+[33m376d3b5[m Merge branch 'backend' of https://github.com/Wrecker37/Fuel-Price-Calculator
+[33mccc8d86[m Implement /profile
+[33m06532c7[m Backend init, user feature
+[33mc5b12ee[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m required fields
+[33m7a5acae[m fixed typo in profile and added required notice to Calculator fields
+[33m5d907e0[m Hardcoding quote history page examples
+[33m58013b7[m Work on calculator.jsx requirements
+[33m5718f69[m started calculator and changed a placeholder value in profile
+[33m707db18[m changed state selection on profile page to include all 50 states, also changed it to store state codes rather than the entire state
+[33mca612be[m html/css for profile page + validation for login, profile, & register
+[33m7c51d58[m duplicated login -> register, added some styling
+[33m35d6d43[m preliminary form base code
+[33m24a5608[m Add sidebar, project structure
+[33m2df0bc7[m Init
+[33m5c24e6e[m Added text to README
+[33m32f78d8[m Initial commit
