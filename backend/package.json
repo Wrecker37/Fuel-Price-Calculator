@@ -25,6 +25,5 @@
       "setupFiles": [
         "<rootDir>/setupTests.js"
       ]
-
   }
 }
