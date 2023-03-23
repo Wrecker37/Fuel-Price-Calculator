@@ -1,21 +1,21 @@
-import request from 'supertest';
-import app from '../index';
+const request = require('supertest');
+const app = require('../index');
 
 test('canary', async () => {
     expect(true).toBe(true);
 });
 
-test('GET /quotehistory?userId= works', async () => {
-    const response = await request(app).get('/quotehistory?userId=user123');
+test('GET /quote?userId= works', async () => {
+    const response = await request(app).get('/quote?userId=user123');
     expect(response.statusCode).toBe(200);
 });
 
-test('GET /quotehistory?userId= fails', async () => {
-    const response = await request(app).get('/quotehistory');
+test('GET /quote?userId= fails', async () => {
+    const response = await request(app).get('/quote');
     expect(response.statusCode).toBe(400);
 });
 
-test('POST /quotehistory works', async () => {
+test('POST /quote works', async () => {
     const payload = {
         isInState: 'Yes',
         isPastClient: 'Yes',
@@ -25,14 +25,14 @@ test('POST /quotehistory works', async () => {
         price: '2.50',
         total: '250'
     };
-    const response = await request(app).post('/quotehistory').send(payload);
+    const response = await request(app).post('/quote').send(payload);
     expect(response.statusCode).toBe(200);
 });
 
-test('POST /quotehistory fails', async () => {
+test('POST /quote fails', async () => {
     const payload = {
 
     };
-    const response = await request(app).post('/quotehistory').send(payload);
+    const response = await request(app).post('/quote').send(payload);
     expect(response.statusCode).toBe(400);
 });
