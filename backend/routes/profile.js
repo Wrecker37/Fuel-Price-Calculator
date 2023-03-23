@@ -44,11 +44,9 @@ router.post('/postProfile',
         }
 
         const {userId, ...profileDetails} = req.body;
-        /*
-        // const { userId, name, address1, address2, city, state, zipcode } = req.body;
-        */
+   
         try {
-            // const profileDetails = { name, address1, address2, city, state, zipcode };
+            
             console.log('profile entering await')
             const profileSent = await ProfileService.setProfile(userId, profileDetails);
             

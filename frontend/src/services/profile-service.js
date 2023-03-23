@@ -11,7 +11,7 @@ export default class ProfileService {
     }
 
     static async setProfile(userId, profileDetails) {
-        console.log('Data being sent:', userId, profileDetails);
+        // console.log('Data being sent:', userId, profileDetails);
         const response = await axios.post('http://localhost:8080/profile/postProfile', 
             {
                 userId,

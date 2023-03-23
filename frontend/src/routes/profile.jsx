@@ -30,7 +30,7 @@ const valid = Yup.object().shape({
 
   const handleSubmit = async (data) => {
 
-    // console.log('data: ', data);
+    
     const profileDetails = {
         name: data.name,
         address1: data.address1,
@@ -49,7 +49,7 @@ const valid = Yup.object().shape({
 
   };
 
-  //const userId = 1;
+  
 export default class Login extends React.Component {
     constructor(props) {
         super(props);
