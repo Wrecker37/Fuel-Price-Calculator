@@ -49,9 +49,9 @@ router.post('/postProfile',
         */
         try {
             // const profileDetails = { name, address1, address2, city, state, zipcode };
-            onsole.log('profile entering await')
+            console.log('profile entering await')
             const profileSent = await ProfileService.setProfile(userId, profileDetails);
-            // return res.status(200).json({ profile: true });
+            
             console.log('profile got through await')
             if (!profileSent) {
                 return res.status(200).json({ profileSent: false });
