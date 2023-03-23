@@ -24,7 +24,10 @@ app.get('/', (req, res) => {
 //   let {username, password} = req.body
 //   console.log(username, password)
 // })
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`);
+  });
+}
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
-});
+module.exports = app;

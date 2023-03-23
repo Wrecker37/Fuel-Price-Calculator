@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --coverage",
     "dev": "nodemon ./app.js"
   },
   "keywords": [],
@@ -17,5 +17,13 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
+  },
+  "jest": {
+      "transformIgnorePatterns": [
+        "node_modules/(?!@ngrx|(?!deck.gl)|ng-dynamic)"
+      ],
+      "setupFiles": [
+        "<rootDir>/setupTests.js"
+      ]
   }
 }
