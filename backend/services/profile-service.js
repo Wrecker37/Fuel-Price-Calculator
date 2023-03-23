@@ -6,8 +6,9 @@ class ProfileService {
         return profile;
     }
 
-    static async setProfile(userId, profile) {
+    static async setProfile(userId, profileSpecs) {
         /* DB call here */
+        const profile = { userId, ...profileSpecs };
 
         return profile;
     }
