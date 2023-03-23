@@ -14,7 +14,7 @@ test('GET /quotehistory?userId= fails', async () => {
     const response = await request(app).get('/quotehistory');
     expect(response.statusCode).toBe(400);
 });
-/*
+
 test('POST /quotehistory works', async () => {
     const payload = {
         isInState: 'Yes',
@@ -36,4 +36,3 @@ test('POST /quotehistory fails', async () => {
     const response = await request(app).post('/quotehistory').send(payload);
     expect(response.statusCode).toBe(400);
 });
-*/
