@@ -2,6 +2,7 @@ import React from "react";
 import { Formik, Form, Field } from 'formik';
 import './root.css';
 import './login.css';
+import ProfileService from '../services/profile-service.js';
 
 import * as Yup from 'yup';
 
@@ -25,24 +26,46 @@ const valid = Yup.object().shape({
         .required('Required'),
   });
 
+  const userId = '1000';
+
+  const handleSubmit = async (data) => {
+
+    // console.log('data: ', data);
+    const profileDetails = {
+        name: data.name,
+        address1: data.address1,
+        address2: data.address2,
+        city: data.city,
+        state: data.state,
+        zipcode: data.zipcode
+    }
+    const profileSent = ProfileService.setProfile(userId, profileDetails);
+
+    if (profileSent){
+        console.log("Profile sent")
+    } else {
+        console.log("Failed to send profile")
+    }
+
+  };
+
+  //const userId = 1;
 export default class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {value: ''};
     }
+    
 
     render() {
         return (
             <>
-                <Formik initialValues={{name:'', address1: '', address2: '', city: '', state: '', zipcode: ''}} validationSchema={valid} onSubmit={(values, {setSubmitting}) => {
-                    setTimeout(() => {
-                        alert(JSON.stringify(values, null, 2));
-                        setSubmitting(false);
-                    }, 400);
-                }}>
-
+                
+                <Formik initialValues={{name:'', address1: '', address2: '', city: '', state: '', zipcode: '' }} validationSchema={valid} onSubmit = {handleSubmit}>
+                    
                     {({errors, touched, isValidating, isSubmitting}) => (
                         <div>
+                            
                             <h1>User Profile</h1>
                             <Form>
                                 <div>
