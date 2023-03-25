@@ -18,8 +18,8 @@ test('GET /profile?userId= fails', async () => {
 test('POST /profile works', async () => {
     const payload = {
         userId: 'john123',
-        fullName: 'John Doe',
-        address: '123 Main St.',
+        name: 'John Doe',
+        address1: '123 Main St.',
         city: 'Houston',
         state: 'TX',
         zipcode: '77204'
