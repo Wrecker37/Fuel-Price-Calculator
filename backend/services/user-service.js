@@ -5,6 +5,14 @@ const saltRounds = 10;
 class UserService {
     static async registerUser(username, password) {
         try {
+
+            const user = await getUser(username);
+
+            // Check if the username already exists
+            if (user) {
+                throw new Error('Username is already taken');
+            }
+
             // Hash the password
             const hashedPassword = await bcrypt.hash(password, saltRounds);
 
