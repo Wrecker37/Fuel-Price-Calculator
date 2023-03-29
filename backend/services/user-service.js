@@ -9,21 +9,21 @@ class UserService {
             const hashedPassword = await bcrypt.hash(password, saltRounds);
 
             // Store the hashed password in the MySQL database
-            // (Replace this with your actual database query function)
+            
             await storeUser(username, hashedPassword);
 
             // Return the registered user's information
             return { username, password: hashedPassword };
         } catch (error) {
-            // Handle error (e.g., throw or return an error message)
+           
             throw error;
         }
     }
 
     static async loginUser(username, password) {
         try {
-            // Retrieve the hashed password from the MySQL database
-            // (Replace this with your actual database query function)
+           
+            
             const user = await getUser(username);
 
             // Check if the user exists
@@ -42,9 +42,9 @@ class UserService {
             // Return true if the login is successful
             return true;
         } catch (error) {
-            // Handle error (e.g., throw or return an error message)
+          
             throw error;
-            //console.log(error)
+           
         }
     }
 }
