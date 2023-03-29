@@ -5,14 +5,14 @@ CREATE DATABASE FUELCALCULATOR;
 USE FUELCALCULATOR;
 
 CREATE TABLE `User` ( 
-    userID varchar(64) NOT NULL PRIMARY KEY, 
+    userID INT auto_increment NOT NULL PRIMARY KEY, 
     username varchar(64) NOT NULL,
-    passwordHash varchar(64) NOT NULL
+    passwordHash varchar(255) NOT NULL
 ) ENGINE=INNODB;
 
 CREATE TABLE `Profile` (
 	ProfileID varchar(64) NOT NULL PRIMARY KEY,
-    UserID varchar(64) NOT NULL,
+    UserID INT NOT NULL,
     FirstName varchar(64) NOT NULL, 
     LastName varchar(64) NOT NULL,
     Email varchar(64) NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE `Profile` (
 
 CREATE TABLE `Quote`(
 	QuoteID varchar(64) NOT NULL PRIMARY KEY,
-    UserID varchar(64) NOT NULL,
+    UserID INT NOT NULL,
     DateRequested DateTime(6) NOT NUll,
     GallonsRequested float DEFAULT 0,
     ProfitMarginPercent float DEFAULT 0,
@@ -39,3 +39,5 @@ CREATE TABLE `Address`(
     ZipCode varchar(64) NOT NULL,
     FOREIGN KEY (ProfileID) REFERENCES Profile(ProfileID) ON DELETE CASCADE
 ) ENGINE=INNODB;
+
+SELECT * FROM User
