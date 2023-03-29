@@ -6,12 +6,12 @@ USE FUELCALCULATOR;
 
 CREATE TABLE `User` ( 
     userID INT auto_increment NOT NULL PRIMARY KEY, 
-    username varchar(64) NOT NULL,
+    username varchar(64) UNIQUE NOT NULL,
     passwordHash varchar(255) NOT NULL
 ) ENGINE=INNODB;
 
 CREATE TABLE `Profile` (
-	ProfileID varchar(64) NOT NULL PRIMARY KEY,
+	ProfileID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     UserID INT NOT NULL,
     FirstName varchar(64) NOT NULL, 
     LastName varchar(64) NOT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE `Profile` (
 ) ENGINE=INNODB;
 
 CREATE TABLE `Quote`(
-	QuoteID varchar(64) NOT NULL PRIMARY KEY,
+	QuoteID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     UserID INT NOT NULL,
     DateRequested DateTime(6) NOT NUll,
     GallonsRequested float DEFAULT 0,
@@ -30,8 +30,8 @@ CREATE TABLE `Quote`(
 ) ENGINE=INNODB;
 
 CREATE TABLE `Address`(
-	AddressID varchar(64) NOT NULL PRIMARY KEY,
-    ProfileID varchar(64) NOT NULL,
+	AddressID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    ProfileID INT NOT NULL,
 	Address varchar(64) NOT NULL,
     City varchar(64) NOT NULL,
     State varchar(64) NOT NULL,
