@@ -13,7 +13,7 @@ class AuthenticationService {
     }
 
     static async loginUser(username, password) {
-        // console.log(username, password)
+        console.log(username, password)
         const user = await axios.post('http://localhost:8080/user/login', {
             username,
             password

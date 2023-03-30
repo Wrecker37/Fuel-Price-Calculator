@@ -1,15 +1,60 @@
+const bcrypt = require('bcryptjs');
+const { storeUser, getUser } = require('../db');
+const saltRounds = 10;
+
 class UserService {
     static async registerUser(username, password) {
-        /* DB call here */
-        return { username, password };
+        try {
+
+            const user = await getUser(username);
+
+            // Check if the username already exists
+            if (user) {
+                throw new Error('Username is already taken');
+            }
+
+            // Hash the password
+            const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+            // Store the hashed password in the MySQL database
+            
+            await storeUser(username, hashedPassword);
+
+            // Return the registered user's information
+            return { username, password: hashedPassword };
+        } catch (error) {
+           
+            throw error;
+        }
     }
 
     static async loginUser(username, password) {
-        /* DB - Check if username exists */
-        
-        /* DB - Match password with real password */
+        try {
+           
+            
+            const user = await getUser(username);
+            console.log('User retrieved from database:', user);
+            // Check if the user exists
+            if (!user || !user.passwordHash) {
+                throw new Error('Invalid login attempt');
+            }
 
-        return true;
+            // Verify the password
+            const isMatch = await bcrypt.compare(password, user.passwordHash);
+            console.log(isMatch)
+
+            // Check if the password matches
+            if (!isMatch) {
+                throw new Error('Invalid password');
+            }
+
+            // Return true if the login is successful
+            return true;
+        } catch (error) {
+          
+            throw error;
+           
+        }
     }
 }
 
