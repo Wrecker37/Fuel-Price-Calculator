@@ -2,7 +2,7 @@ const app = require('../index');
 
 class ProfileService {
     static async getProfile(userId) {
-        const profile = {userId: userId, name: '', address1: '', city: '', state: '', zipcode: ''};
+        profile = {userId: userId, name: '', address1: '', city: '', state: '', zipcode: ''};
 
         connection.query(`SELECT Profile.FirstName, Profile.LastName, Address.Address, Address.City, Address.State, Address.ZipCode FROM Profile INNER JOIN Address ON Profile.ProfileID = Address.ProfileID WHERE Profile.UserID = ${userId};`, (err, rows, fields) => {
             if (err) throw err;
@@ -18,7 +18,7 @@ class ProfileService {
 
     static async setProfile(userId, profileSpecs) {
         const profile = { userId, ...profileSpecs };
-
+        
         // set profile table
         const name = profileSpecs.name.split(" ");
         connection.query(`UPDATE profile SET firstName = ${name[0]}, lastName = ${name[1]} WHERE userID = ${userId};`, (err, rows, fields) => {
