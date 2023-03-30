@@ -21,8 +21,8 @@ CREATE TABLE `Profile` (
 ) ENGINE=INNODB;
 
 CREATE TABLE `Quote`(
-	QuoteID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    UserID INT NOT NULL,
+	QuoteID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    UserID int NOT NULL,
     DateRequested DateTime(6) NOT NUll,
     GallonsRequested float DEFAULT 0,
     ProfitMarginPercent float DEFAULT 0,
