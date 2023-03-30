@@ -33,14 +33,15 @@ class UserService {
            
             
             const user = await getUser(username);
-
+            console.log('User retrieved from database:', user);
             // Check if the user exists
-            if (!user) {
-                throw new Error('User not found');
+            if (!user || !user.passwordHash) {
+                throw new Error('Invalid login attempt');
             }
 
             // Verify the password
-            const isMatch = await bcrypt.compare(password, user.hashedPassword);
+            const isMatch = await bcrypt.compare(password, user.passwordHash);
+            console.log(isMatch)
 
             // Check if the password matches
             if (!isMatch) {

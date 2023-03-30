@@ -14,23 +14,11 @@ connection.connect((err) => {
     console.log('Connected to the MySQL database.');
   });
 
-//module.exports = connection;
 
-// const query = util.promisify(connection.query).bind(connection);
-
-// class SQLService {
-//     static query(SQL) {
-//         return query(SQL);
-//     }
-// }
-
-// module.exports = SQLService;
-
-// Function to store a user in the MySQL database
 const storeUser = (username, hashedPassword) => {
     return new Promise((resolve, reject) => {
   
-      //Generating unique ID for each user
+     
       //const UserID = uuidv4();
   
       // SQL query to insert a new user into the users table
@@ -51,6 +39,7 @@ const storeUser = (username, hashedPassword) => {
   // Function to retrieve a user from the MySQL database by username
   const getUser = (username) => {
     return new Promise((resolve, reject) => {
+
       // SQL query to select a user from the users table by username
       const sql = 'SELECT * FROM User WHERE username = ?';
       const values = [username];
@@ -60,7 +49,8 @@ const storeUser = (username, hashedPassword) => {
         if (error) {
           reject(error);
         } else {
-          // Return the first result (if any)
+
+          
           resolve(results[0]);
         }
       });
