@@ -5,7 +5,6 @@ const saltRounds = 10;
 class UserService {
     static async registerUser(username, password) {
         try {
-
             const user = await getUser(username);
 
             // Check if the username already exists
@@ -17,7 +16,6 @@ class UserService {
             const hashedPassword = await bcrypt.hash(password, saltRounds);
 
             // Store the hashed password in the MySQL database
-            
             await storeUser(username, hashedPassword);
 
             // Return the registered user's information
@@ -30,10 +28,7 @@ class UserService {
 
     static async loginUser(username, password) {
         try {
-           
-            
             const user = await getUser(username);
-            console.log('User retrieved from database:', user);
             // Check if the user exists
             if (!user || !user.passwordHash) {
                 throw new Error('Invalid login attempt');
@@ -41,7 +36,6 @@ class UserService {
 
             // Verify the password
             const isMatch = await bcrypt.compare(password, user.passwordHash);
-            console.log(isMatch)
 
             // Check if the password matches
             if (!isMatch) {
@@ -51,9 +45,7 @@ class UserService {
             // Return true if the login is successful
             return true;
         } catch (error) {
-          
             throw error;
-           
         }
     }
 }

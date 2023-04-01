@@ -42,6 +42,7 @@ const addQuotes = (userId, deliveryDate, gallonsRequested, profitMarginPercent) 
 }
 
 const getProfiles = (userId) => {
+  console.log(userId);
   return new Promise((resolve, reject) => {
     const sql = `SELECT Profile.FirstName, Profile.LastName, Address.Address, Address.City, Address.State, Address.ZipCode FROM Profile INNER JOIN Address ON Profile.ProfileID = Address.ProfileID WHERE Profile.UserID = ${userId}`;
     connection.query(sql, (error, results) => {
@@ -72,10 +73,6 @@ const setProfiles = (userId, profileSpecs) => {
 
 const storeUser = (username, hashedPassword) => {
     return new Promise((resolve, reject) => {
-  
-     
-      //const UserID = uuidv4();
-  
       // SQL query to insert a new user into the users table
       const sql = 'INSERT INTO User (username, passwordHash) VALUES (?, ?)';
       const values = [ username, hashedPassword];
@@ -104,8 +101,6 @@ const storeUser = (username, hashedPassword) => {
         if (error) {
           reject(error);
         } else {
-
-          
           resolve(results[0]);
         }
       });

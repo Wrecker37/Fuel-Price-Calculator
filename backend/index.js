@@ -26,18 +26,18 @@ app.use('/user', userRouter);
 app.use('/profile', profileRouter);
 app.use('/quote', quoteRouter);
 
-app.get('/', async (req, res) => {
-  connection.query('SELECT * FROM User', (err, rows, fields) => {
-    if (err) throw err;
-    console.log(rows[0].userID);
-  });
-  res.send('Hello World!');
-});
+// app.get('/', async (req, res) => {
+//   connection.query('SELECT * FROM User', (err, rows, fields) => {
+//     if (err) throw err;
+//     console.log(rows[0].userID);
+//   });
+//   res.send('Hello World!');
+// });
 
-if (process.env.NODE_ENV !== 'test') {
-  app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
-  });
-}
+// if (process.env.NODE_ENV !== 'test') {
+//   app.listen(port, () => {
+//     console.log(`Example app listening at http://localhost:${port}`);
+//   });
+// }
 
 module.exports = app;
