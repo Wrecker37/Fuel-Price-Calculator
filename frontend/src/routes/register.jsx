@@ -18,7 +18,7 @@ const valid = Yup.object().shape({
 
 
 const handleSubmit = async (data) => {
-    const isRegistered = AuthenticationService.loginUser(data.user, data.password)
+    const isRegistered = AuthenticationService.registerUser(data.user, data.password)
     if (isRegistered){
         console.log("Registered")
     } else {

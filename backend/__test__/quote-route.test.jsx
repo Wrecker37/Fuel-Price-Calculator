@@ -6,7 +6,8 @@ test('canary', async () => {
 });
 
 test('GET /quote?userId= works', async () => {
-    const response = await request(app).get('/quote?userId=user123');
+    const userId = 1;
+    const response = await request(app).get(`/quote?userId=${userId}`);
     expect(response.statusCode).toBe(200);
 });
 
@@ -17,6 +18,7 @@ test('GET /quote?userId= fails', async () => {
 
 test('POST /quote works', async () => {
     const payload = {
+        userId: 1,
         isInState: 'Yes',
         isPastClient: 'Yes',
         deliveryDate: '03/23/2023',

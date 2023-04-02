@@ -1,15 +1,15 @@
+const app = require('../index');
+const { getProfiles, setProfiles } = require('../db');
+
+
 class ProfileService {
     static async getProfile(userId) {
-        /* DB call here */
-        const profile = { name: "John Doe" };
-
-        return profile;
+       const profile = await getProfiles(userId);
+       return profile;
     }
 
     static async setProfile(userId, profileSpecs) {
-        /* DB call here */
-        const profile = { userId, ...profileSpecs };
-
+        const profile = await setProfiles(userId, profileSpecs);
         return profile;
     }
 }

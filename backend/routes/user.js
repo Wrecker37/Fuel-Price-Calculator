@@ -37,14 +37,14 @@ router.post('/login',
         }
 
         const { username, password } = req.body;
-
-        const isLoggedIn = await UserService.loginUser(username, password);
-        if (!isLoggedIn) {
-            return res.status(200).json({ isLoggedIn: false });
-        } 
-
-        return res.status(200).json({ isLoggedIn: true });
+        try{
+            const isLoggedIn = await UserService.loginUser(username, password);
+            return res.status(200).json({ isLoggedIn: true });
+         } catch (err) {
+            console.error(err.message);
+            return res.status(401).json({ message: err.message});
+        }
     }
-)
+);
 
 module.exports = router;

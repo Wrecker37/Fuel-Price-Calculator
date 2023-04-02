@@ -7,8 +7,8 @@ test('canary', async () => {
 
 test('POST /user/login works', async () => {
     const payload = {
-        username: "gyro pedroza",
-        password: "notMyName1"
+        username: "Jane",
+        password: "Jane's Password"
     };
     const response = await request(app).post('/user/login').send(payload);
     expect(response.statusCode).toBe(200);

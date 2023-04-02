@@ -46,11 +46,8 @@ router.post('/',
         const {userId, ...profileDetails} = req.body;
    
         try {
-            
-            console.log('profile entering await')
             const profileSent = await ProfileService.setProfile(userId, profileDetails);
             
-            console.log('profile got through await')
             if (!profileSent) {
                 return res.status(200).json({ profileSent: false });
             } 

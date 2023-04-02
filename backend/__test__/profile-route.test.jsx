@@ -6,7 +6,7 @@ test('canary', async () => {
 });
 
 test('GET /profile?userId= works', async () => {
-    const response = await request(app).get('/profile?userId=user123');
+    const response = await request(app).get('/profile?userId=1');
     expect(response.statusCode).toBe(200);
 });
 
@@ -17,7 +17,7 @@ test('GET /profile?userId= fails', async () => {
 
 test('POST /profile works', async () => {
     const payload = {
-        userId: 'john123',
+        userId: '1',
         name: 'John Doe',
         address1: '123 Main St.',
         city: 'Houston',
