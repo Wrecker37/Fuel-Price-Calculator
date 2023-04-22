@@ -28,25 +28,25 @@ const Login = () => {
             return;
         }
 
-        const user = await ProfileService.getUser(data.user);
-        console.log(user);
+        // const user = await ProfileService.getUser(data.user);
+        // console.log(user);
 
-        let isProfileComplete = false;
-        let profile = null;
+        // let isProfileComplete = false;
+        // let profile = null;
 
-        try {
-            profile = await ProfileService.getProfile(user.userID);
-            console.log(profile);
-            isProfileComplete = true;
-        } catch (err) {
-            console.log('Profile not retrieved');
-        }
+        // try {
+        //     profile = await ProfileService.getProfile(user.userID);
+        //     console.log(profile);
+        //     isProfileComplete = true;
+        // } catch (err) {
+        //     console.log('Profile not retrieved');
+        // }
 
         setContextValue({
             isLoggedIn: true,
-            isProfileComplete: isProfileComplete,
-            user,
-            profile,
+            // isProfileComplete: isProfileComplete,
+            // user,
+            // profile,
         });
     };
 
