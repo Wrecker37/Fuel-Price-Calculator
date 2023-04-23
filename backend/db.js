@@ -95,13 +95,13 @@ const storeUser = (username, hashedPassword) => {
       // SQL query to select a user from the users table by username
       const sql = 'SELECT * FROM User WHERE username = ?';
       const values = [username];
-  
+      
       // Execute the query
       connection.query(sql, values, (error, results) => {
         if (error) {
           reject(error);
         } else {
-          resolve(results);
+          resolve(results[0]);
         }
       });
     });
