@@ -1,11 +1,19 @@
 import { Outlet, Link } from "react-router-dom";
 import './root.css';
+import { useState } from "react";
 
 export default function Root() {
+    const [contextValue, setContextValue] = useState({
+        isLoggedIn: false,
+        isProfileComplete: false,
+        profile: null,
+    });
+
     return (
         <>
             <div id="sidebar">
                 <h1>Sidebar</h1>
+                <p>{contextValue.isLoggedIn ? "Logged in" : "Not logged in"}</p>
                 <nav>
                     <ul>
                         <li class="link">
@@ -24,7 +32,7 @@ export default function Root() {
                 </nav>
             </div>
             <div id="main-page">
-                <Outlet />
+                <Outlet context={[contextValue, setContextValue]} />
             </div>
         </>
     );

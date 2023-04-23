@@ -2,14 +2,16 @@ import axios from 'axios';
 
 class AuthenticationService {
     static async registerUser(username, password) {
-        /* */
         const user = await axios.post('http://localhost:8080/user/register', {
             username,
-            password
-            
+            password,            
         });
-        console.log(user.data.isRegistered)
-        return user.data.isRegistered;
+
+        if (user.data.user) {
+            return true;
+        }
+
+        return false;
     }
 
     static async loginUser(username, password) {
