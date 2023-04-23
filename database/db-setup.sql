@@ -26,6 +26,7 @@ CREATE TABLE `Quote`(
     DateRequested DateTime(6) NOT NUll,
     GallonsRequested float DEFAULT 0,
     ProfitMarginPercent float DEFAULT 0,
+    Price float DEFAULT 0,
     FOREIGN KEY (UserID) REFERENCES User(UserID) ON DELETE CASCADE
 ) ENGINE=INNODB;
 
@@ -40,4 +41,5 @@ CREATE TABLE `Address`(
     FOREIGN KEY (ProfileID) REFERENCES Profile(ProfileID) ON DELETE CASCADE
 ) ENGINE=INNODB;
 
-SELECT * FROM User
+SELECT * FROM User;
+SELECT * FROM Profile;

@@ -5,9 +5,8 @@ import './login.css';
 import * as Yup from 'yup';
 import { useState } from "react";
 import {useFormikContext} from 'formik';
-import DatePicker from 'react-modern-calendar-datepicker';
-import Calendar from 'react-modern-calendar-datepicker'
-import 'react-modern-calendar-datepicker/lib/DatePicker.css';
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 
 const valid = Yup.object().shape({
     gallons: Yup.string()
@@ -16,22 +15,23 @@ const valid = Yup.object().shape({
         .required('Required'),
     client_history: Yup.string().oneOf(['yes', 'no'], 'Required')
         .required('Required'),
-
+    selectedDay: Yup.date().required('Required'),
 });
 
 function MyDatePicker({ name, ...rest }) {
+    const [startDate, setStartDate] = useState(new Date());
     const { setFieldValue } = useFormikContext();
 
+    const onDateChange = (date) => {
+        setStartDate(date); // show changes on frontend
+        setFieldValue("selectedDay", date, true); // push info into formik
+    };
+
+    console.log(name);
     return (
-      <DatePicker
-        {...rest}
-        inputPlaceholder="Select a date"
-        value={rest.value}
-        onChange={(date) => setFieldValue(name, date)}
-        shouldHighlightWeekends
-      />
-    );
-  }
+        <DatePicker selected={startDate} onChange={onDateChange}/>
+    )
+}
 
 const HardCodeAddress = "4401 Cougar Village Dr, Houston, TX 77204";
 const price = 2.50;
@@ -41,11 +41,9 @@ const total = price * gallons;
 
 
 export default class Calculator extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {value: ''};
-        
     }
 
     render() {
@@ -85,9 +83,8 @@ export default class Calculator extends React.Component {
                                     </div>
 
                                     <div>
-                                        <label for="myDate" class ="required">Delivery Date</label>
-                                        <Field name="myDate" component={MyDatePicker} />
-                                        
+                                        <label for="selectedDay" class ="required">Delivery Date</label>
+                                        <Field name="selectedDay" component={MyDatePicker}/>
                                     </div>
                                     
                                     <div>
