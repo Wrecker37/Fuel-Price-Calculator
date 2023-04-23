@@ -4,6 +4,7 @@ const cors = require('cors');
 const userRouter = require('./routes/user');
 const profileRouter = require('./routes/profile');
 const quoteRouter = require('./routes/quote');
+const priceRouter = require('./routes/pricing');
 
 const connection = require('./db');
 
@@ -25,6 +26,7 @@ app.use(cors());
 app.use('/user', userRouter);
 app.use('/profile', profileRouter);
 app.use('/quote', quoteRouter);
+app.use('/price', priceRouter);
 
 // app.get('/', async (req, res) => {
 //   connection.query('SELECT * FROM User', (err, rows, fields) => {

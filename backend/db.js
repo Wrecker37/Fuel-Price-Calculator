@@ -140,7 +140,7 @@ const storeUser = (username, hashedPassword) => {
           reject(error);
         }
         else{
-          results(results[0]);
+          resolve(results[0]);
         }
       });
     });
@@ -154,4 +154,6 @@ const storeUser = (username, hashedPassword) => {
     setProfiles,
     storeUser,
     getUser,
+    getAddress,
+    getProfile
   };
