@@ -44,7 +44,7 @@ const addQuotes = (userId, deliveryDate, gallonsRequested, profitMarginPercent) 
 const getProfiles = (userId) => {
   console.log(userId);
   return new Promise((resolve, reject) => {
-    const sql = `SELECT Profile.FirstName, Profile.LastName, Profile.Email, Address.Address, Address.City, Address.State, Address.ZipCode FROM Profile INNER JOIN Address ON Profile.ProfileID = Address.ProfileID WHERE Profile.UserID = ${userId}`;
+    const sql = `SELECT Profile.FirstName, Profile.LastName, Address.Address, Address.City, Address.State, Address.ZipCode FROM Profile INNER JOIN Address ON Profile.ProfileID = Address.ProfileID WHERE Profile.UserID = ${userId}`;
     connection.query(sql, (error, results) => {
         if (error) {
           reject(error);
@@ -64,11 +64,11 @@ const setProfiles = (userId, profileSpecs) => {
      UPDATE address SET address = ?, city = ?, state = ?, country = ", zipcode = ? WHERE profileID = (SELECT profileID FROM profile WHERE userID = ${userId})`;
     }
     else {
-      const sql = `INSERT INTO profile (UserID, FirstName, LastName, Email) VALUES (${userId}, ?, ?, ?);
-       INSERT INTO address (ProfileID, Address, City, State, Country, ZipCode) VALUES
-       (SELECT ProfileID from profile WHERE UserID = ${userID}, ?, ?, ?, ?, ?)`
+      const sql = `INSERT INTO profile (UserID, FirstName, LastName) VALUES (${userId}, ?, ?);
+       INSERT INTO address (ProfileID, Address, City, State, ZipCode) VALUES
+       (SELECT ProfileID from profile WHERE UserID = ${userID}, ?, ?, ?, ?)`
     }
-    const values = [names[0], names[1], profileSpecs.email, profileSpecs.address1, profileSpecs.city, profileSpecs.state, profileSpecs.country, profileSpecs.zipcode]
+    const values = [names[0], names[1], profileSpecs.address1, profileSpecs.city, profileSpecs.state, profileSpecs.zipcode]
     connection.query(sql, values, (error, results) => {
         if (error) {
           reject(error);
