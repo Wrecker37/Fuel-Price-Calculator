@@ -15,7 +15,6 @@ CREATE TABLE `Profile` (
     UserID INT NOT NULL,
     FirstName varchar(64) NOT NULL, 
     LastName varchar(64) NOT NULL,
-    Email varchar(64) NOT NULL,
     isExistingCustomer bool,
     FOREIGN KEY (UserID) REFERENCES User(userID) ON DELETE CASCADE
 ) ENGINE=INNODB;
@@ -36,7 +35,6 @@ CREATE TABLE `Address`(
 	Address varchar(64) NOT NULL,
     City varchar(64) NOT NULL,
     State varchar(64) NOT NULL,
-    Country varchar(64) NOT NULL,
     ZipCode varchar(64) NOT NULL,
     FOREIGN KEY (ProfileID) REFERENCES Profile(ProfileID) ON DELETE CASCADE
 ) ENGINE=INNODB;
