@@ -30,9 +30,11 @@ router.get('/',
 router.post('/',
     body('userId').exists().notEmpty(),
     body('name').exists().notEmpty(),
+    body('email').exists().notEmpty(),
     body('address1').exists().notEmpty(),
     body('city').exists().notEmpty(),
     body('state').exists().notEmpty(),
+    body('country').exists().notEmpty(),
     body('zipcode').exists().notEmpty(),
     async (req, res) => {
         console.log('POST /profile/postProfile is called');

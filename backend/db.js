@@ -4,7 +4,7 @@ const uuid = require('uuid');
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'rootroot',
+    password: 'password',
     database: 'FUELCALCULATOR',
     port: 3306,
     multipleStatements: true,
@@ -44,7 +44,7 @@ const addQuotes = (userId, deliveryDate, gallonsRequested, profitMarginPercent) 
 const getProfiles = (userId) => {
   console.log(userId);
   return new Promise((resolve, reject) => {
-    const sql = `SELECT Profile.FirstName, Profile.LastName, Address.Address, Address.City, Address.State, Address.ZipCode FROM Profile INNER JOIN Address ON Profile.ProfileID = Address.ProfileID WHERE Profile.UserID = ${userId}`;
+    const sql = `SELECT Profile.FirstName, Profile.LastName, Profile.Email, Address.Address, Address.City, Address.State, Address.ZipCode FROM Profile INNER JOIN Address ON Profile.ProfileID = Address.ProfileID WHERE Profile.UserID = ${userId}`;
     connection.query(sql, (error, results) => {
         if (error) {
           reject(error);
@@ -58,9 +58,17 @@ const getProfiles = (userId) => {
 const setProfiles = (userId, profileSpecs) => {
   return new Promise((resolve, reject) => {
     const names = profileSpecs.name.split(" ");
-
-    const sql = `UPDATE profile SET firstName = ?, lastName = ? WHERE userID = ${userId}; UPDATE address SET address = ?, city = ?, state = ?, zipcode = ? WHERE profileID = (SELECT profileID FROM profile WHERE userID = ${userId})`;
-    const values = [names[0], names[1], profileSpecs.address1, profileSpecs.city, profileSpecs.state, profileSpecs.zipcode]
+    const profile = getProfiles(userId);
+    if(profile){
+    const sql = `UPDATE profile SET firstName = ?, lastName = ?, email = ? WHERE userID = ${userId};
+     UPDATE address SET address = ?, city = ?, state = ?, country = ", zipcode = ? WHERE profileID = (SELECT profileID FROM profile WHERE userID = ${userId})`;
+    }
+    else {
+      const sql = `INSERT INTO profile (UserID, FirstName, LastName, Email) VALUES (${userId}, ?, ?, ?);
+       INSERT INTO address (ProfileID, Address, City, State, Country, ZipCode) VALUES
+       (SELECT ProfileID from profile WHERE UserID = ${userID}, ?, ?, ?, ?, ?)`
+    }
+    const values = [names[0], names[1], profileSpecs.email, profileSpecs.address1, profileSpecs.city, profileSpecs.state, profileSpecs.country, profileSpecs.zipcode]
     connection.query(sql, values, (error, results) => {
         if (error) {
           reject(error);
@@ -101,7 +109,7 @@ const storeUser = (username, hashedPassword) => {
         if (error) {
           reject(error);
         } else {
-          resolve(results);
+          resolve(results[0]);
         }
       });
     });
