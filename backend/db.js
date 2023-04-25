@@ -101,6 +101,45 @@ const storeUser = (username, hashedPassword) => {
         if (error) {
           reject(error);
         } else {
+          resolve(results);
+        }
+      });
+    });
+  };
+
+  //Function to retrieve a profile from Database by userID
+  // Function to retrieve a user from the MySQL database by username
+  const getProfile = (userID) => {
+    return new Promise((resolve, reject) => {
+
+      // SQL query to select a user from the users table by username
+      const sql = 'SELECT * FROM Profile WHERE UserID = ?';
+      const values = [userID];
+  
+      // Execute the query
+      connection.query(sql, values, (error, results) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(results);
+        }
+      });
+    });
+  };
+
+  //Function to get an address using its userID
+  const getAddress = (userID) => {
+    return new Promise((resolve, reject) => {
+      //SQL Querie to get an address based on userID
+      const sql = 'SELECT * FROM Address WHERE ProfileID = (SELECT ProfileID from Profile where UserID = ?)'
+      values = [userID];
+
+      //Execute the query
+      connection.query(sql , values, (error, results) => {
+        if(error) {
+          reject(error);
+        }
+        else{
           resolve(results[0]);
         }
       });
@@ -115,4 +154,6 @@ const storeUser = (username, hashedPassword) => {
     setProfiles,
     storeUser,
     getUser,
+    getAddress,
+    getProfile
   };
