@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for backend/services/profile-service.js</title>
+    <title>Code coverage report for backend/services/pricing-service.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">backend/services</a> profile-service.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">backend/services</a> pricing-service.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">62.5% </span>
+                <span class="strong">11.76% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>10/16</span>
+                <span class='fraction'>2/17</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/4</span>
+                <span class='fraction'>0/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">62.5% </span>
+                <span class="strong">11.76% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>10/16</span>
+                <span class='fraction'>2/17</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -90,61 +90,76 @@
 <a name='L25'></a><a href='#L25'>25</a>
 <a name='L26'></a><a href='#L26'>26</a>
 <a name='L27'></a><a href='#L27'>27</a>
-<a name='L28'></a><a href='#L28'>28</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span></td><td class="text"><pre class="prettyprint lang-js">const app = require('../index');
-const { getProfiles, getProfile, setProfiles, addProfiles, addAddress } = require('../db');
+<span class="cline-any cline-yes">4x</span></td><td class="text"><pre class="prettyprint lang-js">const { getAddress, getProfile } = require('../db');
 &nbsp;
+class PricingService {
+<span class="fstat-no" title="function not covered" >    st</span>atic async calculatePrice(userID, gallons){
+        const price = <span class="cstat-no" title="statement not covered" >1.5 * gallons;</span>
+        let percentage = <span class="cstat-no" title="statement not covered" >0.10;</span>
 &nbsp;
-class ProfileService {
-    static async getProfile(userId) {
-       const profile = await getProfiles(userId);
-       return profile;
-    }
-&nbsp;
-    static async setProfile(userId, profileSpecs) {
-        console.log(`ProfileService.setProfile() invoked - UserId=${userId}`);
-        const profileArray = await getProfile(userId);
-        <span class="missing-if-branch" title="if path not taken" >I</span>if (typeof profileArray !== 'undefined' &amp;&amp; profileArray.length === 0) {
-<span class="cstat-no" title="statement not covered" >            console.log(`ProfileService.setProfile() - creating new profile`);</span>
-            const profileCreated = <span class="cstat-no" title="statement not covered" >await addProfiles(userId);</span>
-            const newProfile = <span class="cstat-no" title="statement not covered" >await getProfile(userId);</span>
-            const profileId = <span class="cstat-no" title="statement not covered" >newProfile[0].ProfileID;</span>
-<span class="cstat-no" title="statement not covered" >            console.log(profileId);</span>
-            const addressCreated = <span class="cstat-no" title="statement not covered" >await addAddress(profileId);</span>
+        const address = <span class="cstat-no" title="statement not covered" >await getAddress(userID);</span>
+<span class="cstat-no" title="statement not covered" >        if (address.State == 'TX') {</span>
+<span class="cstat-no" title="statement not covered" >            percentage += 0.02</span>
+        }
+        else {
+<span class="cstat-no" title="statement not covered" >            percentage += 0.04</span>
+        }
+        const profile = <span class="cstat-no" title="statement not covered" >await getProfile(userID);</span>
+<span class="cstat-no" title="statement not covered" >        if (profile.isExistingCustomer) {</span>
+<span class="cstat-no" title="statement not covered" >            percentage -= 0.01</span>
+        }
+        
+<span class="cstat-no" title="statement not covered" >        if (gallons &gt; 1000) {</span>
+<span class="cstat-no" title="statement not covered" >            percentage += 0.02;</span>
+        }
+        else {
+<span class="cstat-no" title="statement not covered" >            percentage += 0.03;</span>
         }
 &nbsp;
-        const profile = await setProfiles(userId, profileSpecs);
-        return profile;
+        const margin = <span class="cstat-no" title="statement not covered" >price * percentage;</span>
+        const total = <span class="cstat-no" title="statement not covered" >gallons * (price + margin);</span>
+<span class="cstat-no" title="statement not covered" >        return total;</span>
     }
 }
 &nbsp;
-module.exports = ProfileService;</pre></td></tr></table></pre>
+module.exports = PricingService;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->

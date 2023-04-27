@@ -34,12 +34,12 @@ const Profile = () => {
     const [contextValue, setContextValue] = useOutletContext();
 
     const handleSubmit = async (data) => {
-        if (!contextValue.user) {
-            console.log(`User data not available`);
-            return;
-        }
+        // if (!contextValue.user) {
+        //     console.log(`User data not available`);
+        //     return;
+        // }
 
-        console.log(data);
+        // console.log(data);
 
         const profileDetails = {
             name: data.name,
