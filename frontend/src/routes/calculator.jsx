@@ -24,6 +24,13 @@ const valid = Yup.object().shape({
     isPastClient: Yup.string().oneOf(['yes', 'no'], 'Required')
         .required('Required'),
     dateRequested: Yup.date().required('Required'),
+    profitMarginPercent: Yup.string()
+        .required('Required')
+        .test(
+            'Is positive?', 
+            'Please enter a number greater than 0!', 
+            (value) => value => 0
+        ),
 });
 
 function MyDatePicker({ name, ...rest }) {
@@ -87,7 +94,7 @@ const Calculator = () => {
 
     return (
         <>
-            <Formik initialValues={{ gallons: '', address: HardCodeAddress, dateRequested: new Date(), isInState: '', isPastClient: '', }} validationSchema={valid} onSubmit={handleSubmit}>
+            <Formik initialValues={{ gallons: '', address: HardCodeAddress, dateRequested: new Date(), isInState: '', isPastClient: '', profitMarginPercent: ''}} validationSchema={valid} onSubmit={handleSubmit}>
                 {({ errors, touched, isValidating, isSubmitting }) => (
                     <div>
                         <h1>Calculator</h1>
