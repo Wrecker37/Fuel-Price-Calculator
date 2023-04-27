@@ -17,7 +17,7 @@ connection.connect((err) => {
 
 const getQuotes = (userId) => {
   return new Promise((resolve, reject) => {
-    const sql = `SELECT profile.profileID, profile.isExistingCustomer, quote.dateRequested, quote.gallonsRequested, quote.profitMarginPercent, address.address, address.state FROM address, profile, quote WHERE profile.userID = ${userId} AND address.profileID = (SELECT profileID FROM profile WHERE userID = ${userId})`;
+    const sql = `SELECT profile.profileID, profile.isExistingCustomer, quote.dateRequested, quote.gallonsRequested, quote.profitMarginPercent, quote.price, quote.total, address.address, address.state FROM address, profile, quote WHERE profile.userID = ${userId} AND address.profileID = (SELECT profileID FROM profile WHERE userID = ${userId})`;
     connection.query(sql, (error, results) => {
       if (error) {
         reject(error);
@@ -28,10 +28,12 @@ const getQuotes = (userId) => {
   });
 }
 
-const addQuotes = (userId, deliveryDate, gallonsRequested, profitMarginPercent) => {
+const addQuotes = (userId, deliveryDate, gallonsRequested, profitMarginPercent, price, total) => {
   return new Promise((resolve, reject) => {
-    const sql = `INSERT INTO Quote(userID, dateRequested, gallonsRequested, profitMarginPercent) VALUES (${userId}, ${deliveryDate}, ${gallonsRequested}, ${profitMarginPercent})`;
-    connection.query(sql, (error, results) => {
+    const sql = `INSERT INTO Quote(userID, dateRequested, gallonsRequested, profitMarginPercent, price, total) VALUES (?, ?, ?, ?, ?, ?)`;
+    const values = [userId, deliveryDate, gallonsRequested, profitMarginPercent, price, total];
+
+    connection.query(sql, values, (error, results) => {
         if (error) {
           reject(error);
         } else {

@@ -10,9 +10,8 @@ class QuoteService {
             quote.deliveryDate = row.dateRequested;
             quote.gallons = row.gallonsRequested;
             quote.deliveryAddress = row.address;
-            // hardcoded
-            quote.price = 10;
-            quote.total = 1000;
+            quote.price = row.price;
+            quote.total = row.total;
             return quote;
         });
 
@@ -20,8 +19,9 @@ class QuoteService {
     }
 
     static async addQuote(userId, quote) {
-        const { isInState, isPastClient, deliveryDate, gallonsRequested, deliveryAddress, price, total } = quote;
-        const newQuote = await addQuotes(userId, deliveryDate, gallonsRequested, 10);
+        const { isInState, isPastClient, deliveryDate, gallonsRequested, deliveryAddress, price, total, profitMarginPercent } = quote;
+        
+        const newQuote = await addQuotes(userId, deliveryDate, gallonsRequested, profitMarginPercent, price, total);
         return newQuote;
     }
 }
