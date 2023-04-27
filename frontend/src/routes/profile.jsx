@@ -34,7 +34,7 @@ const Profile = () => {
     const [contextValue, setContextValue] = useOutletContext();
 
     const handleSubmit = async (data) => {
-        if (!contextValue.user) {
+        if (/*!contextValue.user*/1==2) {
             console.log(`User data not available`);
             return;
         }
@@ -50,8 +50,9 @@ const Profile = () => {
             zipcode: data.zipcode
         }
 
-        const profileSent = await ProfileService.setProfile(contextValue.user.userID, profileDetails);
-
+        console.log("Calling profile service");
+        const profileSent = await ProfileService.setProfile(/*contextValue.user.userID*/2, profileDetails);
+        console.log("Profile Service call successfull")
         if (profileSent) {
             console.log("Profile sent");
         } else {
