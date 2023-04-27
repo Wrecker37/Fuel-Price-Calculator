@@ -17,7 +17,12 @@ connection.connect((err) => {
 
 const getQuotes = (userId) => {
   return new Promise((resolve, reject) => {
-    const sql = `SELECT profile.profileID, profile.isExistingCustomer, quote.dateRequested, quote.gallonsRequested, quote.profitMarginPercent, address.address, address.state FROM address, profile, quote WHERE profile.userID = ${userId} AND address.profileID = (SELECT profileID FROM profile WHERE userID = ${userId})`;
+    const sql = `SELECT p.profileID, p.isExistingCustomer, q.dateRequested, q.gallonsRequested, q.profitMarginPercent, q.price, q.total, a.address, a.state 
+      FROM profile AS p
+      INNER JOIN address AS a ON p.profileId = a.profileId
+      INNER JOIN quote AS q ON q.userId = p.userId
+      WHERE p.userID = ${userId}
+    `;
     connection.query(sql, (error, results) => {
       if (error) {
         reject(error);
@@ -28,10 +33,12 @@ const getQuotes = (userId) => {
   });
 }
 
-const addQuotes = (userId, deliveryDate, gallonsRequested, profitMarginPercent) => {
+const addQuotes = (userId, deliveryDate, gallonsRequested, profitMarginPercent, price, total) => {
   return new Promise((resolve, reject) => {
-    const sql = `INSERT INTO Quote(userID, dateRequested, gallonsRequested, profitMarginPercent) VALUES (${userId}, ${deliveryDate}, ${gallonsRequested}, ${profitMarginPercent})`;
-    connection.query(sql, (error, results) => {
+    const sql = `INSERT INTO Quote(userID, dateRequested, gallonsRequested, profitMarginPercent, price, total) VALUES (?, ?, ?, ?, ?, ?)`;
+    const values = [userId, deliveryDate, gallonsRequested, profitMarginPercent, price, total];
+
+    connection.query(sql, values, (error, results) => {
         if (error) {
           reject(error);
         } else {
@@ -95,13 +102,13 @@ const storeUser = (username, hashedPassword) => {
       // SQL query to select a user from the users table by username
       const sql = 'SELECT * FROM User WHERE username = ?';
       const values = [username];
-  
+      
       // Execute the query
       connection.query(sql, values, (error, results) => {
         if (error) {
           reject(error);
         } else {
-          resolve(results);
+          resolve(results[0]);
         }
       });
     });

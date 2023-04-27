@@ -15,9 +15,6 @@ const valid = Yup.object().shape({
         .required('Required'),
 });
 
-
-
-
 const Login = () => {
     const [contextValue, setContextValue] = useOutletContext();
 
@@ -28,25 +25,23 @@ const Login = () => {
             return;
         }
 
-        // const user = await ProfileService.getUser(data.user);
-        // console.log(user);
+        const user = await ProfileService.getUser(data.user);
+        console.log(user);
 
-        // let isProfileComplete = false;
-        // let profile = null;
+        const userId = user.userID;
+        let address = null;
 
-        // try {
-        //     profile = await ProfileService.getProfile(user.userID);
-        //     console.log(profile);
-        //     isProfileComplete = true;
-        // } catch (err) {
-        //     console.log('Profile not retrieved');
-        // }
+        try {
+            const profile = await ProfileService.getProfile(userId);
+            address = profile.Address;
+        } catch (err) {
+            console.log(`Profile not retrieved + ${err}`);
+        }
 
         setContextValue({
             isLoggedIn: true,
-            // isProfileComplete: isProfileComplete,
-            // user,
-            // profile,
+            userId,
+            address
         });
     };
 

@@ -1,9 +1,9 @@
 import React from "react";
 import { Formik, Form, Field } from 'formik';
 import './root.css';
-import { Link } from "react-router-dom";
 import * as Yup from 'yup';
 import { useState, useEffect } from "react";
+import { useOutletContext } from "react-router-dom";
 import { useFormikContext } from 'formik';
 import DatePicker from 'react-modern-calendar-datepicker';
 import Calendar from 'react-modern-calendar-datepicker'
@@ -49,20 +49,17 @@ function MyDatePicker({ name, ...rest }) {
     );
 }
 
-const myString = "4401 Cougar Village Dr, Houston, TX 77204";
-const price = 2.50;
-const gallons = 100;
-const total = price * gallons;
-
-
-
 const QuoteHistory = (props) => {
+    const [contextValue, setContextValue] = useOutletContext();
+
     const [quotes, setQuotes] = useState([]);
 
     useEffect(() => {
+        const userId = contextValue.userId;
+
         const fetchData = async () => {
             try {
-                const newQuotes = await QuoteService.getQuoteHistory();
+                const newQuotes = await QuoteService.getQuoteHistory(userId);
                 setQuotes(newQuotes);
                 console.log(newQuotes);
                 console.log('Fetched quotes from backend!');
@@ -71,7 +68,7 @@ const QuoteHistory = (props) => {
             }
         }
         fetchData();
-    }, [])
+    }, [contextValue.userId])
 
     return (
         <>

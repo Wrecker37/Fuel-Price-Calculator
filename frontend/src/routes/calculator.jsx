@@ -3,19 +3,22 @@ import { Formik, Form, Field } from 'formik';
 import './root.css';
 import './login.css';
 import * as Yup from 'yup';
-import { useState } from "react";
-import {useFormikContext} from 'formik';
+import { useState, useEffect } from "react";
+import { useOutletContext } from "react-router-dom";
+import { useFormikContext } from 'formik';
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import PriceService from "../services/price-service";
+import QuoteService from "../services/quote-service";
 
 const valid = Yup.object().shape({
     gallons: Yup.string()
         .required('Required'),
-    client_in_state: Yup.string().oneOf(['yes', 'no'], 'Required')
+    isInState: Yup.string().oneOf(['yes', 'no'], 'Required')
         .required('Required'),
-    client_history: Yup.string().oneOf(['yes', 'no'], 'Required')
+    isPastClient: Yup.string().oneOf(['yes', 'no'], 'Required')
         .required('Required'),
-    selectedDay: Yup.date().required('Required'),
+    dateRequested: Yup.date().required('Required'),
 });
 
 function MyDatePicker({ name, ...rest }) {
@@ -24,92 +27,113 @@ function MyDatePicker({ name, ...rest }) {
 
     const onDateChange = (date) => {
         setStartDate(date); // show changes on frontend
-        setFieldValue("selectedDay", date, true); // push info into formik
+        setFieldValue("dateRequested", date, true); // push info into formik
     };
 
     console.log(name);
     return (
-        <DatePicker selected={startDate} onChange={onDateChange}/>
+        <DatePicker selected={startDate} onChange={onDateChange} />
     )
 }
 
+
 const HardCodeAddress = "4401 Cougar Village Dr, Houston, TX 77204";
-const price = 2.50;
-const gallons = 100;
-const total = price * gallons;
+
+const Calculator = () => {
+    const [contextValue, setContextValue] = useOutletContext();
 
 
+    const [price, setPrice] = useState(0);
+    const [gallons, setGallons] = useState(0);
+    const [total, setTotal] = useState(0);
 
-export default class Calculator extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {value: ''};
+    useEffect(() => {
+        setPrice(total / gallons);
+    }, [total, gallons]);
+
+    const handleSubmit = async (values, { setSubmitting }) => {
+        const { gallons, isInState, isPastClient, dateRequested, profitMarginPercent } = values;
+        console.log(gallons, isInState, isPastClient, dateRequested, profitMarginPercent);
+
+        const userId = contextValue.userId;
+        const deliveryAddress = contextValue.address;
+
+        const computedTotal = await PriceService.getPrice(userId, 30);
+        const computedPrice = total / gallons;
+
+        setPrice(computedPrice);
+        setGallons(gallons);
+        setTotal(computedTotal);
+
+        const postedQuote = await QuoteService.postQuote({
+            userId,
+            isInState,
+            isPastClient,
+            deliveryDate: dateRequested,
+            deliveryAddress,
+            gallonsRequested: gallons,
+            computedPrice,
+            computedTotal,
+            profitMarginPercent
+        });
+
+        setSubmitting(false);
     }
 
-    render() {
-
-            return (
-
-                <>
-                    <Formik initialValues={{ gallons: '', address: HardCodeAddress, selectedDay: new Date(), client_in_state: '', client_history: '', }} validationSchema={valid} onSubmit={(values, { setSubmitting }) => {
-                        setTimeout(() => {
-                            alert(JSON.stringify(values, null, 2));
-                            setSubmitting(false);
-                        }, 400);
-                    }}>
-
-                        {({ errors, touched, isValidating, isSubmitting }) => (
+    return (
+        <>
+            <Formik initialValues={{ gallons: '', address: HardCodeAddress, dateRequested: new Date(), isInState: '', isPastClient: '', }} validationSchema={valid} onSubmit={handleSubmit}>
+                {({ errors, touched, isValidating, isSubmitting }) => (
+                    <div>
+                        <h1>Calculator</h1>
+                        <Form>
                             <div>
-                                <h1>Calculator</h1>
-                                <Form>
-                                    <div>
-                                        <label for="client_in_state" class ="required">Client In-State</label>                                    
-                                        <Field as="select" name="client_in_state">
-                                            <option value="">Select an option</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                        </Field>
-                                        <div class="error">{errors.client_in_state && touched.client_in_state ? (<div>{errors.client_in_state}</div>) : null}</div>
-                                    </div>
-
-                                    <div>
-                                        <label for="client_history" class ="required">Past Client</label>                                    
-                                        <Field as="select" name="client_history">
-                                            <option value="">Select an option</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                        </Field>
-                                        <div class="error">{errors.client_history && touched.client_history ? (<div>{errors.client_history}</div>) : null}</div>
-                                    </div>
-
-                                    <div>
-                                        <label for="selectedDay" class ="required">Delivery Date</label>
-                                        <Field name="selectedDay" component={MyDatePicker}/>
-                                    </div>
-                                    
-                                    <div>
-                                        <label for="gallons" class ="required">Gallons Requested</label>
-                                        <Field type="number" name="gallons" class="form-control" />
-                                        <div class="error">{errors.gallons && touched.gallons ? (<div>{errors.gallons}</div>) : null}</div>
-                                    </div>
-                                    
-                                    <div>
-                                        <label for="nonEditable" title={HardCodeAddress}>Delivery Address: {HardCodeAddress}</label>
-                                        <label for="price">Price: ${price}  / gallon </label> 
-                                        <label for="price">Total: ${total} </label>                                    
-                                    </div>
-
-                                    <div class="submit">
-                                        <button type="submit">Submit</button>
-                                    </div>
-                                </Form>
-                               
+                                <label for="isInState" class="required">Client In-State</label>
+                                <Field as="select" name="isInState">
+                                    <option value="">Select an option</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </Field>
+                                <div class="error">{errors.isInState && touched.isInState ? (<div>{errors.isInState}</div>) : null}</div>
                             </div>
-                        )}
+                            <div>
+                                <label for="isPastClient" class="required">Past Client</label>
+                                <Field as="select" name="isPastClient">
+                                    <option value="">Select an option</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </Field>
+                                <div class="error">{errors.isPastClient && touched.isPastClient ? (<div>{errors.isPastClient}</div>) : null}</div>
+                            </div>
+                            <div>
+                                <label for="dateRequested" class="required">Delivery Date</label>
+                                <Field name="dateRequested" component={MyDatePicker} />
+                            </div>
+                            <div>
+                                <label for="gallons" class="required">Gallons Requested</label>
+                                <Field type="number" name="gallons" class="form-control" />
+                                <div class="error">{errors.gallons && touched.gallons ? (<div>{errors.gallons}</div>) : null}</div>
+                            </div>
+                            <div>
+                                <label for="profitMarginPercent" class="required">Profit Margin Percent</label>
+                                <Field type="number" name="profitMarginPercent" class="form-control" />
+                                <div class="error">{errors.profitMarginPercent && touched.profitMarginPercent ? (<div>{errors.profitMarginPercent}</div>) : null}</div>
+                            </div>
+                            <div>
+                                <label for="nonEditable" title={HardCodeAddress}>Delivery Address: {HardCodeAddress}</label>
+                                <label for="price">Price: ${price}  / gallon </label>
+                                <label for="price">Total: ${total} </label>
+                            </div>
+                            <div class="submit">
+                                <button type="submit">Submit</button>
+                            </div>
+                        </Form>
+                    </div>
+                )}
 
-                    </Formik>
-                </>
-            );
-
-    }
+            </Formik>
+        </>
+    );
 }
+
+export default Calculator;
