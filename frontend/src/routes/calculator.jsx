@@ -13,7 +13,12 @@ import QuoteService from "../services/quote-service";
 
 const valid = Yup.object().shape({
     gallons: Yup.string()
-        .required('Required'),
+        .required('Required')
+        .test(
+            'Is positive?', 
+            'Please enter a number greater than 1!', 
+            (value) => value > 0
+        ),
     isInState: Yup.string().oneOf(['yes', 'no'], 'Required')
         .required('Required'),
     isPastClient: Yup.string().oneOf(['yes', 'no'], 'Required')
