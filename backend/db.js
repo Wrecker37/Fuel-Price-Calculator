@@ -58,15 +58,16 @@ const getProfiles = (userId) => {
 const setProfiles = (userId, profileSpecs) => {
   return new Promise((resolve, reject) => {
     const names = profileSpecs.name.split(" ");
-    const profile = getProfiles(userId);
-    if(profile){
-    const sql = `UPDATE profile SET firstName = ?, lastName = ?, email = ? WHERE userID = ${userId};
-     UPDATE address SET address = ?, city = ?, state = ?, country = ", zipcode = ? WHERE profileID = (SELECT profileID FROM profile WHERE userID = ${userId})`;
+    const profile = getProfile(userId);
+    
+    if(profile != null){
+    sql = `UPDATE profile SET firstName = ?, lastName = ? WHERE userID = ${userId};
+     UPDATE address SET address = ?, city = ?, state = ?, zipcode = ? WHERE profileID = (SELECT profileID FROM profile WHERE userID = ${userId})`;
     }
     else {
-      const sql = `INSERT INTO profile (UserID, FirstName, LastName) VALUES (${userId}, ?, ?);
+      sql = `INSERT INTO profile (UserID, FirstName, LastName) VALUES (${userId}, ?, ?);
        INSERT INTO address (ProfileID, Address, City, State, ZipCode) VALUES
-       (SELECT ProfileID from profile WHERE UserID = ${userID}, ?, ?, ?, ?)`
+       ((SELECT ProfileID from profile WHERE UserID = ${userId}), ?, ?, ?, ?)`
     }
     const values = [names[0], names[1], profileSpecs.address1, profileSpecs.city, profileSpecs.state, profileSpecs.zipcode]
     connection.query(sql, values, (error, results) => {

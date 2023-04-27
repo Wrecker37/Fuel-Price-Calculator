@@ -9,6 +9,7 @@ class ProfileService {
     }
 
     static async setProfile(userId, profileSpecs) {
+        console.log("Setting profile");
         const profile = await setProfiles(userId, profileSpecs);
         return profile;
     }
