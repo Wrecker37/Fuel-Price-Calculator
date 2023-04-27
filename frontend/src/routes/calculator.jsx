@@ -37,7 +37,7 @@ function MyDatePicker({ name, ...rest }) {
 
     console.log(name);
     return (
-        <DatePicker selected={startDate} onChange={onDateChange} />
+        <DatePicker selected={startDate} minDate={new Date()} onChange={onDateChange} />
     )
 }
 
