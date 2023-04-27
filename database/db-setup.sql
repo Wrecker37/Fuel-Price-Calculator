@@ -23,10 +23,11 @@ CREATE TABLE `Profile` (
 CREATE TABLE `Quote`(
 	QuoteID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     UserID int NOT NULL,
-    DateRequested DateTime(6) NOT NUll,
+    DateRequested varchar(64) NOT NUll,
     GallonsRequested float DEFAULT 0,
     ProfitMarginPercent float DEFAULT 0,
-    Price float DEFAULT 0,
+    Price float,
+    Total float,    
     FOREIGN KEY (UserID) REFERENCES User(UserID) ON DELETE CASCADE
 ) ENGINE=INNODB;
 
@@ -40,6 +41,3 @@ CREATE TABLE `Address`(
     ZipCode varchar(64) NOT NULL,
     FOREIGN KEY (ProfileID) REFERENCES Profile(ProfileID) ON DELETE CASCADE
 ) ENGINE=INNODB;
-
-SELECT * FROM User;
-SELECT * FROM Profile;
