@@ -25,8 +25,7 @@ class PricingService {
         }
 
         const margin = price * percentage;
-        const total = gallons * (price + margin);
-        return total;
+        return (price + margin);
     }
 }
 
