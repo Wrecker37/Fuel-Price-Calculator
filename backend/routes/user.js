@@ -5,6 +5,27 @@ const UserService = require('../services/user-service');
 
 const router = express.Router();
 
+/* GET /user?username= */
+router.get('/', 
+    query('username').exists().notEmpty(),
+    async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        const { username } = req.query;
+
+        try {
+            const user = await UserService.getUserByUsername(username);
+            return res.status(200).json({ user });
+        } catch (err) {
+            console.log(`UserService.getUser() failed - Error${err}`);
+            return res.status(500).json({ message: "Cannot load resource"});
+        }
+    }
+)
+
 /* POST /user/register */
 router.post('/register', 
     body('username').exists().notEmpty(),    

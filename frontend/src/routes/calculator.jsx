@@ -4,6 +4,7 @@ import './root.css';
 import './login.css';
 import * as Yup from 'yup';
 import { useState, useEffect } from "react";
+import { useOutletContext } from "react-router-dom";
 import { useFormikContext } from 'formik';
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
@@ -39,6 +40,9 @@ function MyDatePicker({ name, ...rest }) {
 const HardCodeAddress = "4401 Cougar Village Dr, Houston, TX 77204";
 
 const Calculator = () => {
+    const [contextValue, setContextValue] = useOutletContext();
+
+
     const [price, setPrice] = useState(0);
     const [gallons, setGallons] = useState(0);
     const [total, setTotal] = useState(0);
@@ -51,10 +55,10 @@ const Calculator = () => {
         const { gallons, isInState, isPastClient, dateRequested, profitMarginPercent } = values;
         console.log(gallons, isInState, isPastClient, dateRequested, profitMarginPercent);
 
-        const dummyUserId = 1;
-        const dummyAddress = '123 Main St.';
+        const userId = contextValue.userId;
+        const deliveryAddress = contextValue.address;
 
-        const computedTotal = await PriceService.getPrice(dummyUserId, 30);
+        const computedTotal = await PriceService.getPrice(userId, 30);
         const computedPrice = total / gallons;
 
         setPrice(computedPrice);
@@ -62,11 +66,11 @@ const Calculator = () => {
         setTotal(computedTotal);
 
         const postedQuote = await QuoteService.postQuote({
-            userId: dummyUserId,
+            userId,
             isInState,
             isPastClient,
             deliveryDate: dateRequested,
-            deliveryAddress: dummyAddress,
+            deliveryAddress,
             gallonsRequested: gallons,
             computedPrice,
             computedTotal,

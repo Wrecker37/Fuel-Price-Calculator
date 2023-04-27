@@ -3,6 +3,16 @@ const { storeUser, getUser } = require('../db');
 const saltRounds = 10;
 
 class UserService {
+    static async getUserByUsername(username) {
+        try {
+            const user = await getUser(username);
+            return user;
+        } catch (err) {
+            console.log(`getUserByUsername() failed - ${err}`);
+            return;
+        }
+    }
+
     static async registerUser(username, password) {
         try {
             const user = await getUser(username);

@@ -17,7 +17,12 @@ connection.connect((err) => {
 
 const getQuotes = (userId) => {
   return new Promise((resolve, reject) => {
-    const sql = `SELECT profile.profileID, profile.isExistingCustomer, quote.dateRequested, quote.gallonsRequested, quote.profitMarginPercent, quote.price, quote.total, address.address, address.state FROM address, profile, quote WHERE profile.userID = ${userId} AND address.profileID = (SELECT profileID FROM profile WHERE userID = ${userId})`;
+    const sql = `SELECT p.profileID, p.isExistingCustomer, q.dateRequested, q.gallonsRequested, q.profitMarginPercent, q.price, q.total, a.address, a.state 
+      FROM profile AS p
+      INNER JOIN address AS a ON p.profileId = a.profileId
+      INNER JOIN quote AS q ON q.userId = p.userId
+      WHERE p.userID = ${userId}
+    `;
     connection.query(sql, (error, results) => {
       if (error) {
         reject(error);
