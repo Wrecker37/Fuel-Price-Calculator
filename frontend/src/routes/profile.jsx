@@ -9,14 +9,18 @@ import * as Yup from 'yup';
 
 const valid = Yup.object().shape({
     name: Yup.string()
+        .min(5, "Too short")
         .max(50, "Too long")
         .required('Required'),
     address1: Yup.string()
+        .min(5, "Too short")
         .max(100, "Too long")
         .required('Required'),
     address2: Yup.string()
+        .min(5, "Too short")
         .max(100, "Too long"),
     city: Yup.string()
+        .min(3, "Too short")
         .max(100, "Too long")
         .required('Required'),
     state: Yup.string()
@@ -34,12 +38,12 @@ const Profile = () => {
     const [contextValue, setContextValue] = useOutletContext();
 
     const handleSubmit = async (data) => {
-        // if (!contextValue.user) {
-        //     console.log(`User data not available`);
-        //     return;
-        // }
+        if (contextValue.userId === -1) {
+            console.log(`User not logged in`);
+            return;
+        }
 
-        // console.log(data);
+        console.log(data);
 
         const profileDetails = {
             name: data.name,
@@ -50,10 +54,15 @@ const Profile = () => {
             zipcode: data.zipcode
         }
 
-        const profileSent = await ProfileService.setProfile(contextValue.user.userID, profileDetails);
+        const profileSent = await ProfileService.setProfile(contextValue.userId, profileDetails);
 
         if (profileSent) {
             console.log("Profile sent");
+            setContextValue({
+                ...contextValue,
+                isProfileMissing: false,
+                address: data.address1,
+            })
         } else {
             console.log("Failed to send profile");
         }
@@ -65,6 +74,8 @@ const Profile = () => {
     if (!contextValue.isLoggedIn) {
         return <p>Uh oh! Please log in first.</p>;
     }
+
+
 
     return (
         <>

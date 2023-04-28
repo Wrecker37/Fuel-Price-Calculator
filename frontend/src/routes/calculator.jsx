@@ -15,22 +15,11 @@ const valid = Yup.object().shape({
     gallons: Yup.string()
         .required('Required')
         .test(
-            'Is positive?', 
-            'Please enter a number greater than 1!', 
+            'Is positive?',
+            'Please enter a number greater than 1!',
             (value) => value > 0
         ),
-    isInState: Yup.string().oneOf(['yes', 'no'], 'Required')
-        .required('Required'),
-    isPastClient: Yup.string().oneOf(['yes', 'no'], 'Required')
-        .required('Required'),
     dateRequested: Yup.date().required('Required'),
-    profitMarginPercent: Yup.string()
-        .required('Required')
-        .test(
-            'Is positive?', 
-            'Please enter a number greater than 0!', 
-            (value) => value => 0
-        ),
 });
 
 function MyDatePicker({ name, ...rest }) {
@@ -49,11 +38,8 @@ function MyDatePicker({ name, ...rest }) {
 }
 
 
-const HardCodeAddress = "4401 Cougar Village Dr, Houston, TX 77204";
-
 const Calculator = () => {
     const [contextValue, setContextValue] = useOutletContext();
-
 
     const [price, setPrice] = useState(0);
     const [gallons, setGallons] = useState(0);
@@ -71,7 +57,7 @@ const Calculator = () => {
         const deliveryAddress = contextValue.address;
 
         const computedTotal = await PriceService.getPrice(userId, gallons);
-        const computedPrice = total / gallons;
+        const computedPrice = computedTotal / gallons;
 
         setPrice(computedPrice);
         setGallons(gallons);
@@ -79,44 +65,30 @@ const Calculator = () => {
 
         const postedQuote = await QuoteService.postQuote({
             userId,
-            isInState,
-            isPastClient,
             deliveryDate: dateRequested,
-            deliveryAddress,
             gallonsRequested: gallons,
             computedPrice,
-            computedTotal,
-            profitMarginPercent
+            computedTotal
         });
 
         setSubmitting(false);
     }
 
+    if (!contextValue.isLoggedIn) {
+        return <p>Uh oh! Please log in first.</p>;
+    }
+
+    if (contextValue.isProfileMissing) {
+        return <p>Uh oh! Please complete your profile first.</p>
+    }
+
     return (
         <>
-            <Formik initialValues={{ gallons: '', address: HardCodeAddress, dateRequested: new Date(), isInState: '', isPastClient: '', profitMarginPercent: ''}} validationSchema={valid} onSubmit={handleSubmit}>
+            <Formik initialValues={{ gallons: '', address: contextValue.address, dateRequested: new Date() }} validationSchema={valid} onSubmit={handleSubmit}>
                 {({ errors, touched, isValidating, isSubmitting }) => (
                     <div>
                         <h1>Calculator</h1>
                         <Form>
-                            <div>
-                                <label for="isInState" class="required">Client In-State</label>
-                                <Field as="select" name="isInState">
-                                    <option value="">Select an option</option>
-                                    <option value="yes">Yes</option>
-                                    <option value="no">No</option>
-                                </Field>
-                                <div class="error">{errors.isInState && touched.isInState ? (<div>{errors.isInState}</div>) : null}</div>
-                            </div>
-                            <div>
-                                <label for="isPastClient" class="required">Past Client</label>
-                                <Field as="select" name="isPastClient">
-                                    <option value="">Select an option</option>
-                                    <option value="yes">Yes</option>
-                                    <option value="no">No</option>
-                                </Field>
-                                <div class="error">{errors.isPastClient && touched.isPastClient ? (<div>{errors.isPastClient}</div>) : null}</div>
-                            </div>
                             <div>
                                 <label for="dateRequested" class="required">Delivery Date</label>
                                 <Field name="dateRequested" component={MyDatePicker} />
@@ -127,12 +99,7 @@ const Calculator = () => {
                                 <div class="error">{errors.gallons && touched.gallons ? (<div>{errors.gallons}</div>) : null}</div>
                             </div>
                             <div>
-                                <label for="profitMarginPercent" class="required">Profit Margin Percent</label>
-                                <Field type="number" name="profitMarginPercent" class="form-control" />
-                                <div class="error">{errors.profitMarginPercent && touched.profitMarginPercent ? (<div>{errors.profitMarginPercent}</div>) : null}</div>
-                            </div>
-                            <div>
-                                <label for="nonEditable" title={HardCodeAddress}>Delivery Address: {HardCodeAddress}</label>
+                                <label for="nonEditable" title={contextValue.address}>Delivery Address: {contextValue.address}</label>
                                 <label for="price">Price: ${price}  / gallon </label>
                                 <label for="price">Total: ${total} </label>
                             </div>

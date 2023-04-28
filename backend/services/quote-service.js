@@ -19,9 +19,9 @@ class QuoteService {
     }
 
     static async addQuote(userId, quote) {
-        const { isInState, isPastClient, deliveryDate, gallonsRequested, deliveryAddress, price, total, profitMarginPercent } = quote;
+        const { deliveryDate, gallonsRequested, price, total } = quote;
         
-        const newQuote = await addQuotes(userId, deliveryDate, gallonsRequested, profitMarginPercent, price, total);
+        const newQuote = await addQuotes(userId, deliveryDate, gallonsRequested, price, total);
         return newQuote;
     }
 }

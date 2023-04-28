@@ -17,7 +17,7 @@ connection.connect((err) => {
 
 const getQuotes = (userId) => {
   return new Promise((resolve, reject) => {
-    const sql = `SELECT p.profileID, p.isExistingCustomer, q.dateRequested, q.gallonsRequested, q.profitMarginPercent, q.price, q.total, a.address, a.state 
+    const sql = `SELECT p.profileID, q.dateRequested, q.gallonsRequested, q.price, q.total, a.address, a.state 
       FROM profile AS p
       INNER JOIN address AS a ON p.profileId = a.profileId
       INNER JOIN quote AS q ON q.userId = p.userId
@@ -33,10 +33,10 @@ const getQuotes = (userId) => {
   });
 }
 
-const addQuotes = (userId, deliveryDate, gallonsRequested, profitMarginPercent, price, total) => {
+const addQuotes = (userId, deliveryDate, gallonsRequested, price, total) => {
   return new Promise((resolve, reject) => {
-    const sql = `INSERT INTO Quote(userID, dateRequested, gallonsRequested, profitMarginPercent, price, total) VALUES (?, ?, ?, ?, ?, ?)`;
-    const values = [userId, deliveryDate, gallonsRequested, profitMarginPercent, price, total];
+    const sql = `INSERT INTO Quote(userID, dateRequested, gallonsRequested, price, total) VALUES (?, ?, ?, ?, ?)`;
+    const values = [userId, deliveryDate, gallonsRequested, price, total];
 
     connection.query(sql, values, (error, results) => {
         if (error) {

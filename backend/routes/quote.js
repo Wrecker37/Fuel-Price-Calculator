@@ -29,14 +29,11 @@ router.get('/',
 /* POST /quote */
 
 router.post('/', 
-    body('isInState').exists(),
-    body('isPastClient').exists(),
+    body('userId').exists().notEmpty(),
     body('deliveryDate').exists().isString(),
     body('gallonsRequested').exists().isNumeric(),
-    body('deliveryAddress').exists().isString(),
     body('price').exists().isNumeric(),
     body('total').exists().isNumeric(),
-    body('profitMarginPercent').exists().isNumeric(),
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
