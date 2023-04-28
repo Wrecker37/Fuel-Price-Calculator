@@ -4,7 +4,7 @@ const uuid = require('uuid');
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'rootroot',
+    password: 'password',
     database: 'FUELCALCULATOR',
     port: 3306,
     multipleStatements: true,
