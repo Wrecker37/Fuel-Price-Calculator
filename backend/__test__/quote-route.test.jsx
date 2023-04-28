@@ -22,10 +22,11 @@ test('POST /quote works', async () => {
         isInState: 'Yes',
         isPastClient: 'Yes',
         deliveryDate: '03/23/2023',
-        gallonsRequested: '100',
+        gallonsRequested: 100,
         deliveryAddress: '4401 Cougar Village Dr, Houston, TX 77204',
-        price: '2.50',
-        total: '250'
+        price: 2.50,
+        total: 250,
+        profitMarginPercent: 0.5
     };
     const response = await request(app).post('/quote').send(payload);
     expect(response.statusCode).toBe(200);
