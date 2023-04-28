@@ -13,12 +13,10 @@ export default class QuoteService {
     }
 
     static async postQuote(quoteData) {
-        console.log(`API request:`);
-        console.log(quoteData);
-        const { userId, isInState, isPastClient, deliveryDate, gallonsRequested, deliveryAddress, computedPrice: price, computedTotal: total, profitMarginPercent } = quoteData;
+        const { userId, deliveryDate, gallonsRequested, computedPrice: price, computedTotal: total } = quoteData;
 
         const quote = await axios.post(`${BASE_URL}/quote`, {
-            userId, isInState, isPastClient, deliveryDate, gallonsRequested, deliveryAddress, price, total, profitMarginPercent
+            userId, deliveryDate, gallonsRequested, price, total, 
         });
 
         return quote.data;

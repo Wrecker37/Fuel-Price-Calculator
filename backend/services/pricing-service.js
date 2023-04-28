@@ -1,4 +1,4 @@
-const { getAddress, getProfile } = require('../db');
+const { getAddress, getProfile, getQuotes } = require('../db');
 
 class PricingService {
     static async calculatePrice(userID, gallons){
@@ -11,8 +11,10 @@ class PricingService {
         else {
             margin += 0.04
         }
-        const profile = await getProfile(userID);
-        if (profile.isExistingCustomer) {
+
+        const quotes = await getQuotes(userID);
+        // If existing customer
+        if (!(typeof quotes !== 'undefined' && quotes.length === 0)) {
             margin -= 0.01
         }
         
@@ -23,7 +25,8 @@ class PricingService {
             margin += 0.03;
         }
         margin *= 1.5;
-        return (margin + 1.5) * gallons;
+        const total = (margin + 1.5) * gallons
+        return total;
     }
 }
 

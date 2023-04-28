@@ -24,13 +24,6 @@ const valid = Yup.object().shape({
     isPastClient: Yup.string().oneOf(['yes', 'no'], 'Required')
         .required('Required'),
     dateRequested: Yup.date().required('Required'),
-    profitMarginPercent: Yup.string()
-        .required('Required')
-        .test(
-            'Is positive?',
-            'Please enter a number greater than 0!',
-            (value) => value > 0
-        ),
 });
 
 function MyDatePicker({ name, ...rest }) {
@@ -51,7 +44,6 @@ function MyDatePicker({ name, ...rest }) {
 
 const Calculator = () => {
     const [contextValue, setContextValue] = useOutletContext();
-
 
     const [price, setPrice] = useState(0);
     const [gallons, setGallons] = useState(0);
@@ -77,14 +69,10 @@ const Calculator = () => {
 
         const postedQuote = await QuoteService.postQuote({
             userId,
-            isInState,
-            isPastClient,
             deliveryDate: dateRequested,
-            deliveryAddress,
             gallonsRequested: gallons,
             computedPrice,
-            computedTotal,
-            profitMarginPercent
+            computedTotal
         });
 
         setSubmitting(false);
@@ -100,7 +88,7 @@ const Calculator = () => {
 
     return (
         <>
-            <Formik initialValues={{ gallons: '', address: contextValue.address, dateRequested: new Date(), isInState: '', isPastClient: '', profitMarginPercent: '' }} validationSchema={valid} onSubmit={handleSubmit}>
+            <Formik initialValues={{ gallons: '', address: contextValue.address, dateRequested: new Date(), isInState: '', isPastClient: '' }} validationSchema={valid} onSubmit={handleSubmit}>
                 {({ errors, touched, isValidating, isSubmitting }) => (
                     <div>
                         <h1>Calculator</h1>
@@ -131,11 +119,6 @@ const Calculator = () => {
                                 <label for="gallons" class="required">Gallons Requested</label>
                                 <Field type="number" name="gallons" class="form-control" />
                                 <div class="error">{errors.gallons && touched.gallons ? (<div>{errors.gallons}</div>) : null}</div>
-                            </div>
-                            <div>
-                                <label for="profitMarginPercent" class="required">Profit Margin Percent</label>
-                                <Field type="number" name="profitMarginPercent" class="form-control" />
-                                <div class="error">{errors.profitMarginPercent && touched.profitMarginPercent ? (<div>{errors.profitMarginPercent}</div>) : null}</div>
                             </div>
                             <div>
                                 <label for="nonEditable" title={contextValue.address}>Delivery Address: {contextValue.address}</label>
