@@ -26,7 +26,6 @@ test('POST /quote works', async () => {
         deliveryAddress: '4401 Cougar Village Dr, Houston, TX 77204',
         price: 2.50,
         total: 250,
-        profitMarginPercent: 0.5
     };
     const response = await request(app).post('/quote').send(payload);
     expect(response.statusCode).toBe(200);
