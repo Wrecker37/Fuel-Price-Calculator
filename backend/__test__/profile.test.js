@@ -17,3 +17,17 @@ test("setProfile() returns correct value", async () => {
 
     expect(await ProfileService.setProfile(userId, profileSpecs)).toBeInstanceOf(Object);
 });
+
+test('setProfile() creates a new profile and returns correct value', async () => {
+    const userId = 2;
+    const profileSpecs = {
+        name: "Jane Doe",
+        address1: "456 Oak Street",
+        city: "Houston",
+        state: "TX",
+        zipcode: "77090"
+    }
+
+    expect(await ProfileService.setProfile(userId, profileSpecs)).toBeInstanceOf(Object);
+
+})
