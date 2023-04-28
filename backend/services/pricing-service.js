@@ -2,6 +2,9 @@ const { getAddress, getProfile, getQuotes } = require('../db');
 
 class PricingService {
     static async calculatePrice(userID, gallons){
+        if (!userID || !gallons || isNaN(gallons)) {
+            throw new Error("Invalid input");
+          }
         let margin = 0.1;
 
         const address = await getAddress(userID);
