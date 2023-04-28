@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for backend/services/profile-service.js</title>
+    <title>Code coverage report for backend/routes/pricing.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">backend/services</a> profile-service.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">backend/routes</a> pricing.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">62.5% </span>
+                <span class="strong">40% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>10/16</span>
+                <span class='fraction'>6/15</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/4</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">62.5% </span>
+                <span class="strong">40% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>10/16</span>
+                <span class='fraction'>6/15</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -90,61 +90,64 @@
 <a name='L25'></a><a href='#L25'>25</a>
 <a name='L26'></a><a href='#L26'>26</a>
 <a name='L27'></a><a href='#L27'>27</a>
-<a name='L28'></a><a href='#L28'>28</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">4x</span>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span></td><td class="text"><pre class="prettyprint lang-js">const app = require('../index');
-const { getProfiles, getProfile, setProfiles, addProfiles, addAddress } = require('../db');
+<span class="cline-any cline-yes">4x</span></td><td class="text"><pre class="prettyprint lang-js">const express = require('express');
+const { query, body, validationResult} = require('express-validator');
 &nbsp;
+const PricingService = require('../services/pricing-service');
 &nbsp;
-class ProfileService {
-    static async getProfile(userId) {
-       const profile = await getProfiles(userId);
-       return profile;
+const router = express.Router();
+&nbsp;
+// POST
+router.post('/', 
+    body('userId').exists().notEmpty(),
+    body('gallons').exists().notEmpty(),
+<span class="fstat-no" title="function not covered" >    as</span>ync (req, res) =&gt; {
+    const errors = <span class="cstat-no" title="statement not covered" >validationResult(req);</span>
+<span class="cstat-no" title="statement not covered" >    if (!errors.isEmpty()) {</span>
+<span class="cstat-no" title="statement not covered" >        return res.status(400).json({ errors: errors.array() });</span>
     }
 &nbsp;
-    static async setProfile(userId, profileSpecs) {
-        console.log(`ProfileService.setProfile() invoked - UserId=${userId}`);
-        const profileArray = await getProfile(userId);
-        <span class="missing-if-branch" title="if path not taken" >I</span>if (typeof profileArray !== 'undefined' &amp;&amp; profileArray.length === 0) {
-<span class="cstat-no" title="statement not covered" >            console.log(`ProfileService.setProfile() - creating new profile`);</span>
-            const profileCreated = <span class="cstat-no" title="statement not covered" >await addProfiles(userId);</span>
-            const newProfile = <span class="cstat-no" title="statement not covered" >await getProfile(userId);</span>
-            const profileId = <span class="cstat-no" title="statement not covered" >newProfile[0].ProfileID;</span>
-<span class="cstat-no" title="statement not covered" >            console.log(profileId);</span>
-            const addressCreated = <span class="cstat-no" title="statement not covered" >await addAddress(profileId);</span>
-        }
+    const { userId, gallons } = <span class="cstat-no" title="statement not covered" >req.body;</span>
 &nbsp;
-        const profile = await setProfiles(userId, profileSpecs);
-        return profile;
+<span class="cstat-no" title="statement not covered" >    try {</span>
+        const price = <span class="cstat-no" title="statement not covered" >await PricingService.calculatePrice(userId, gallons);</span>
+<span class="cstat-no" title="statement not covered" >        return res.status(200).json({ price });</span>
+    } catch (err) {
+<span class="cstat-no" title="statement not covered" >        console.error(err.message);</span>
+<span class="cstat-no" title="statement not covered" >        return res.status(401).json({ message: err.message});</span>
     }
-}
+});
 &nbsp;
-module.exports = ProfileService;</pre></td></tr></table></pre>
+module.exports = router;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->

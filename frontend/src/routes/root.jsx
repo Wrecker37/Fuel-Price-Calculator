@@ -5,6 +5,7 @@ import { useState } from "react";
 export default function Root() {
     const [contextValue, setContextValue] = useState({
         isLoggedIn: false,
+        isProfileMissing: true,
         userId: -1,
         address: '',
     });
@@ -14,8 +15,7 @@ export default function Root() {
             <div id="sidebar">
                 <h1>Sidebar</h1>
                 <p>{contextValue.isLoggedIn ? "Logged in" : "Not logged in"}</p>
-                <p>{contextValue.userId}</p>
-                <p>{contextValue.address}</p>
+                <p>{contextValue.isProfileMissing ? "Profile missing" : "Not missing"}</p>
                 <nav>
                     <ul>
                         <li class="link">

@@ -13,12 +13,24 @@ import QuoteService from "../services/quote-service";
 
 const valid = Yup.object().shape({
     gallons: Yup.string()
-        .required('Required'),
+        .required('Required')
+        .test(
+            'Is positive?',
+            'Please enter a number greater than 1!',
+            (value) => value > 0
+        ),
     isInState: Yup.string().oneOf(['yes', 'no'], 'Required')
         .required('Required'),
     isPastClient: Yup.string().oneOf(['yes', 'no'], 'Required')
         .required('Required'),
     dateRequested: Yup.date().required('Required'),
+    profitMarginPercent: Yup.string()
+        .required('Required')
+        .test(
+            'Is positive?',
+            'Please enter a number greater than 0!',
+            (value) => value > 0
+        ),
 });
 
 function MyDatePicker({ name, ...rest }) {
@@ -32,12 +44,10 @@ function MyDatePicker({ name, ...rest }) {
 
     console.log(name);
     return (
-        <DatePicker selected={startDate} onChange={onDateChange} />
+        <DatePicker selected={startDate} minDate={new Date()} onChange={onDateChange} />
     )
 }
 
-
-const HardCodeAddress = "4401 Cougar Village Dr, Houston, TX 77204";
 
 const Calculator = () => {
     const [contextValue, setContextValue] = useOutletContext();
@@ -58,8 +68,8 @@ const Calculator = () => {
         const userId = contextValue.userId;
         const deliveryAddress = contextValue.address;
 
-        const computedTotal = await PriceService.getPrice(userId, 30);
-        const computedPrice = total / gallons;
+        const computedTotal = await PriceService.getPrice(userId, gallons);
+        const computedPrice = computedTotal / gallons;
 
         setPrice(computedPrice);
         setGallons(gallons);
@@ -80,9 +90,17 @@ const Calculator = () => {
         setSubmitting(false);
     }
 
+    if (!contextValue.isLoggedIn) {
+        return <p>Uh oh! Please log in first.</p>;
+    }
+
+    if (contextValue.isProfileMissing) {
+        return <p>Uh oh! Please complete your profile first.</p>
+    }
+
     return (
         <>
-            <Formik initialValues={{ gallons: '', address: HardCodeAddress, dateRequested: new Date(), isInState: '', isPastClient: '', }} validationSchema={valid} onSubmit={handleSubmit}>
+            <Formik initialValues={{ gallons: '', address: contextValue.address, dateRequested: new Date(), isInState: '', isPastClient: '', profitMarginPercent: '' }} validationSchema={valid} onSubmit={handleSubmit}>
                 {({ errors, touched, isValidating, isSubmitting }) => (
                     <div>
                         <h1>Calculator</h1>
@@ -120,7 +138,7 @@ const Calculator = () => {
                                 <div class="error">{errors.profitMarginPercent && touched.profitMarginPercent ? (<div>{errors.profitMarginPercent}</div>) : null}</div>
                             </div>
                             <div>
-                                <label for="nonEditable" title={HardCodeAddress}>Delivery Address: {HardCodeAddress}</label>
+                                <label for="nonEditable" title={contextValue.address}>Delivery Address: {contextValue.address}</label>
                                 <label for="price">Price: ${price}  / gallon </label>
                                 <label for="price">Total: ${total} </label>
                             </div>

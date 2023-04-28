@@ -78,6 +78,34 @@ const setProfiles = (userId, profileSpecs) => {
   });
 }
 
+const addProfiles = (userId) => {
+  return new Promise((resolve, reject) => {
+    const sql = `INSERT INTO profile (UserID) VALUES (?)`;
+    const values = [userId];
+    connection.query(sql, values, (error, results) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(results);
+        }
+      });
+  });
+}
+
+const addAddress = (profileId) => {
+  return new Promise((resolve, reject) => {
+    const sql = `INSERT INTO address (profileId) VALUES (?)`;
+    const values = [profileId];
+    connection.query(sql, values, (error, results) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(results);
+        }
+      });
+  });
+}
+
 const storeUser = (username, hashedPassword) => {
     return new Promise((resolve, reject) => {
       // SQL query to insert a new user into the users table
@@ -159,6 +187,8 @@ const storeUser = (username, hashedPassword) => {
     addQuotes,
     getProfiles,
     setProfiles,
+    addProfiles,
+    addAddress,
     storeUser,
     getUser,
     getAddress,

@@ -34,8 +34,8 @@ const Profile = () => {
     const [contextValue, setContextValue] = useOutletContext();
 
     const handleSubmit = async (data) => {
-        if (!contextValue.user) {
-            console.log(`User data not available`);
+        if (contextValue.userId === -1) {
+            console.log(`User not logged in`);
             return;
         }
 
@@ -50,10 +50,15 @@ const Profile = () => {
             zipcode: data.zipcode
         }
 
-        const profileSent = await ProfileService.setProfile(contextValue.user.userID, profileDetails);
+        const profileSent = await ProfileService.setProfile(contextValue.userId, profileDetails);
 
         if (profileSent) {
             console.log("Profile sent");
+            setContextValue({
+                ...contextValue,
+                isProfileMissing: false,
+                address: data.address1,
+            })
         } else {
             console.log("Failed to send profile");
         }
@@ -65,6 +70,8 @@ const Profile = () => {
     if (!contextValue.isLoggedIn) {
         return <p>Uh oh! Please log in first.</p>;
     }
+
+
 
     return (
         <>
