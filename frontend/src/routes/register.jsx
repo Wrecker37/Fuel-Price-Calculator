@@ -8,8 +8,10 @@ import AuthenticationService from '../services/authentication-service.js';
 
 const valid = Yup.object().shape({
     user: Yup.string()
+        .min(3, "Too short")
         .required('Required'),
     password: Yup.string()
+        .min(3, "Too short")
         .required('Required'),
     confirm: Yup.string()
         .oneOf([Yup.ref('password'), null], "Passwords don't match")

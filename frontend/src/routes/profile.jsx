@@ -9,14 +9,18 @@ import * as Yup from 'yup';
 
 const valid = Yup.object().shape({
     name: Yup.string()
+        .min(5, "Too short")
         .max(50, "Too long")
         .required('Required'),
     address1: Yup.string()
+        .min(5, "Too short")
         .max(100, "Too long")
         .required('Required'),
     address2: Yup.string()
+        .min(5, "Too short")
         .max(100, "Too long"),
     city: Yup.string()
+        .min(3, "Too short")
         .max(100, "Too long")
         .required('Required'),
     state: Yup.string()
