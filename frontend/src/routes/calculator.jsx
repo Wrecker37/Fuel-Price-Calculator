@@ -58,7 +58,7 @@ const Calculator = () => {
         const userId = contextValue.userId;
         const deliveryAddress = contextValue.address;
 
-        const computedTotal = await PriceService.getPrice(userId, 30);
+        const computedTotal = await PriceService.getPrice(userId, gallons);
         const computedPrice = total / gallons;
 
         setPrice(computedPrice);
