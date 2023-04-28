@@ -29,7 +29,7 @@ const valid = Yup.object().shape({
         .test(
             'Is positive?',
             'Please enter a number greater than 0!',
-            (value) => value => 0
+            (value) => value > 0
         ),
 });
 
