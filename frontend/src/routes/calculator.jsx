@@ -13,12 +13,24 @@ import QuoteService from "../services/quote-service";
 
 const valid = Yup.object().shape({
     gallons: Yup.string()
-        .required('Required'),
+        .required('Required')
+        .test(
+            'Is positive?', 
+            'Please enter a number greater than 1!', 
+            (value) => value > 0
+        ),
     isInState: Yup.string().oneOf(['yes', 'no'], 'Required')
         .required('Required'),
     isPastClient: Yup.string().oneOf(['yes', 'no'], 'Required')
         .required('Required'),
     dateRequested: Yup.date().required('Required'),
+    profitMarginPercent: Yup.string()
+        .required('Required')
+        .test(
+            'Is positive?', 
+            'Please enter a number greater than 0!', 
+            (value) => value => 0
+        ),
 });
 
 function MyDatePicker({ name, ...rest }) {
@@ -32,7 +44,7 @@ function MyDatePicker({ name, ...rest }) {
 
     console.log(name);
     return (
-        <DatePicker selected={startDate} onChange={onDateChange} />
+        <DatePicker selected={startDate} minDate={new Date()} onChange={onDateChange} />
     )
 }
 
@@ -82,7 +94,7 @@ const Calculator = () => {
 
     return (
         <>
-            <Formik initialValues={{ gallons: '', address: HardCodeAddress, dateRequested: new Date(), isInState: '', isPastClient: '', }} validationSchema={valid} onSubmit={handleSubmit}>
+            <Formik initialValues={{ gallons: '', address: HardCodeAddress, dateRequested: new Date(), isInState: '', isPastClient: '', profitMarginPercent: ''}} validationSchema={valid} onSubmit={handleSubmit}>
                 {({ errors, touched, isValidating, isSubmitting }) => (
                     <div>
                         <h1>Calculator</h1>
