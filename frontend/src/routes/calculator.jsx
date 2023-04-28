@@ -90,6 +90,10 @@ const Calculator = () => {
         setSubmitting(false);
     }
 
+    if (!contextValue.isLoggedIn) {
+        return <p>Uh oh! Please log in first.</p>;
+    }
+
     return (
         <>
             <Formik initialValues={{ gallons: '', address: contextValue.address, dateRequested: new Date(), isInState: '', isPastClient: '', profitMarginPercent: '' }} validationSchema={valid} onSubmit={handleSubmit}>

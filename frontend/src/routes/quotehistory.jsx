@@ -70,6 +70,10 @@ const QuoteHistory = (props) => {
         fetchData();
     }, [contextValue.userId])
 
+    if (!contextValue.isLoggedIn) {
+        return <p>Uh oh! Please log in first.</p>;
+    }
+
     return (
         <>
             <Formik initialValues={{ gallons: '', address: '', selectedDay: new Date() }} validationSchema={valid} onSubmit={(values, { setSubmitting }) => {
