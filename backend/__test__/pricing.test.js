@@ -14,7 +14,7 @@ test('In TX, isExistingCustomer, gallons > 1000', async () => {
 
 test('Not in TX, isExistingCustomer, gallons > 1000', async () => {
     const gallons = 2000;
-    const userId = 24;
+    const userId = 47;
     
     let margin = 0.1 + 0.04 - 0.01 + 0.02;
     margin *= 1.5;
