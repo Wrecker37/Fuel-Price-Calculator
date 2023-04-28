@@ -45,16 +45,17 @@ const Calculator = () => {
     const [gallons, setGallons] = useState(0);
     const [total, setTotal] = useState(0);
 
+    const [quoteToSave, setQuoteToSave] = useState({});
+
     useEffect(() => {
         setPrice(total / gallons);
     }, [total, gallons]);
 
     const handleSubmit = async (values, { setSubmitting }) => {
-        const { gallons, isInState, isPastClient, dateRequested, profitMarginPercent } = values;
-        console.log(gallons, isInState, isPastClient, dateRequested, profitMarginPercent);
+        const { gallons, dateRequested } = values;
+        console.log(gallons, dateRequested);
 
         const userId = contextValue.userId;
-        const deliveryAddress = contextValue.address;
 
         const computedTotal = await PriceService.getPrice(userId, gallons);
         const computedPrice = computedTotal / gallons;
@@ -63,15 +64,22 @@ const Calculator = () => {
         setGallons(gallons);
         setTotal(computedTotal);
 
-        const postedQuote = await QuoteService.postQuote({
+        const quote = {
             userId,
             deliveryDate: dateRequested,
             gallonsRequested: gallons,
             computedPrice,
             computedTotal
-        });
+        }
 
+        setQuoteToSave(quote);
         setSubmitting(false);
+    }
+
+    const handleQuoteSave = async () => {
+        const savedQuote = await QuoteService.postQuote({
+            ...quoteToSave
+        });
     }
 
     if (!contextValue.isLoggedIn) {
@@ -104,13 +112,14 @@ const Calculator = () => {
                                 <label for="price">Total: ${total} </label>
                             </div>
                             <div class="submit">
-                                <button type="submit">Submit</button>
+                                <button type="submit">Get Quote</button>
                             </div>
                         </Form>
                     </div>
                 )}
 
             </Formik>
+            {Object.keys(quoteToSave).length === 0 ? <p>Get a quote before you can save it!</p> : <button type="submit" onClick={handleQuoteSave}>Save Quote</button>}
         </>
     );
 }
