@@ -94,6 +94,10 @@ const Calculator = () => {
         return <p>Uh oh! Please log in first.</p>;
     }
 
+    if (contextValue.isProfileMissing) {
+        return <p>Uh oh! Please complete your profile first.</p>
+    }
+
     return (
         <>
             <Formik initialValues={{ gallons: '', address: contextValue.address, dateRequested: new Date(), isInState: '', isPastClient: '', profitMarginPercent: '' }} validationSchema={valid} onSubmit={handleSubmit}>

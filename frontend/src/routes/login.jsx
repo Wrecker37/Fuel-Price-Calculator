@@ -30,16 +30,18 @@ const Login = () => {
 
         const userId = user.userID;
         let address = null;
-
+        let isProfileMissing = true;
         try {
             const profile = await ProfileService.getProfile(userId);
             address = profile.Address;
+            isProfileMissing = false;
         } catch (err) {
             console.log(`Profile not retrieved + ${err}`);
         }
 
         setContextValue({
             isLoggedIn: true,
+            isProfileMissing,
             userId,
             address
         });

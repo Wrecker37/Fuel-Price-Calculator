@@ -54,6 +54,11 @@ const Profile = () => {
 
         if (profileSent) {
             console.log("Profile sent");
+            setContextValue({
+                ...contextValue,
+                isProfileMissing: false,
+                address: data.address1,
+            })
         } else {
             console.log("Failed to send profile");
         }
@@ -65,6 +70,8 @@ const Profile = () => {
     if (!contextValue.isLoggedIn) {
         return <p>Uh oh! Please log in first.</p>;
     }
+
+
 
     return (
         <>

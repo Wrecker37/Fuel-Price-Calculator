@@ -74,6 +74,10 @@ const QuoteHistory = (props) => {
         return <p>Uh oh! Please log in first.</p>;
     }
 
+    if (contextValue.isProfileMissing) {
+        return <p>Uh oh! Please complete your profile first.</p>
+    }
+
     return (
         <>
             <Formik initialValues={{ gallons: '', address: '', selectedDay: new Date() }} validationSchema={valid} onSubmit={(values, { setSubmitting }) => {
